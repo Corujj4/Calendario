@@ -1,7 +1,7 @@
 const painelEvento = document.querySelector("#painel-evento");
 const calendario = document.querySelector("#calendario");
 
-const eventos = new Map();
+const eventos = [];
 
 let dataSelecionada = null;
 let eventoEditando = null;
@@ -14,9 +14,24 @@ export function configurarEventos() {
 }
 
 function tratarCliquePainel(eventoClique) {
-  const botaoFechar = eventoClique.target.closest(
-    "#botao-fechar-painel",
-  );
+  const botaoExcluir = eventoClique.target.closest(
+  '[data-acao="excluir"]',
+);
+
+if (botaoExcluir) {
+  const eventoId = botaoExcluir.dataset.eventoId;
+
+  abrirConfirmacaoExclusao(eventoId);
+  return;
+}
+
+const botaoConfirmarExclusao = eventoClique.target.closest(
+  '[data-acao="confirmar-exclusao"]',
+);
+
+if (botaoConfirmarExclusao) {
+  excluirEvento(botaoConfirmarExclusao.dataset.eventoId);
+}
 
   if (botaoFechar) {
     fecharPainel();
@@ -170,6 +185,81 @@ function abrirDetalhesEvento(eventoId) {
       </div>
     </div>
   `;
+}
+
+function abrirConfirmacaoExclusao(eventoId) {
+  const eventoEncontrado = eventos.find(
+    (evento) => evento.id === eventoId,
+  );
+
+  if (!eventoEncontrado) {
+    return;
+  }
+
+  painelEvento.innerHTML = `
+    <div class="confirmacao-exclusao">
+      <div class="cabecalho-painel">
+        <div>
+          <h2>Excluir evento?</h2>
+          <p>Esta ação não poderá ser desfeita.</p>
+        </div>
+
+        <button
+          id="botao-fechar-painel"
+          class="botao-fechar-painel"
+          type="button"
+          aria-label="Fechar painel"
+        >
+          ×
+        </button>
+      </div>
+
+      <p>
+        Deseja realmente excluir
+        <strong>${eventoEncontrado.titulo}</strong>?
+      </p>
+
+      <div class="acoes-evento">
+        <button
+          class="botao-controle"
+          type="button"
+          data-acao="editar"
+          data-evento-id="${eventoEncontrado.id}"
+        >
+          Cancelar
+        </button>
+
+        <button
+          class="botao-controle botao-excluir"
+          type="button"
+          data-acao="confirmar-exclusao"
+          data-evento-id="${eventoEncontrado.id}"
+        >
+          Excluir
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function excluirEvento(eventoId) {
+  const indiceEvento = eventos.findIndex(
+    (evento) => evento.id === eventoId,
+  );
+
+  if (indiceEvento === -1) {
+    return;
+  }
+
+  eventos.splice(indiceEvento, 1);
+
+  const botaoEvento = calendario.querySelector(
+    `[data-evento-id="${eventoId}"]`,
+  );
+
+  botaoEvento?.remove();
+
+  fecharPainel();
 }
 function abrirFormularioEdicao(eventoId) {
   const evento = eventos.find(

@@ -579,3 +579,19 @@ button {
 .status-cancelado {
   color: #ef4444;
 }
+.confirmacao-exclusao {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.botao-excluir {
+  border-color: #ef4444;
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.botao-excluir:hover {
+  border-color: #ff6666;
+  background: #ff6666;
+}
