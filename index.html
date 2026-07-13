@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="Calendário interno para organização de trilhas"
+    />
+
+    <title>Calendário de Trilhas</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <header class="cabecalho-principal">
+        <div>
+          <h1>Calendário de Trilhas</h1>
+          <p>Organização interna da equipe</p>
+        </div>
+
+        <button id="botao-atualizar-clima" class="botao-controle" type="button">
+          Atualizar clima
+        </button>
+      </header>
+
+      <nav class="navegacao-calendario" aria-label="Navegação do calendário">
+        <button id="botao-mes-anterior" class="botao-controle" type="button">
+          Mês anterior
+        </button>
+
+        <div class="periodo-atual">
+          <h2 id="titulo-mes">Julho de 2026</h2>
+
+          <button id="botao-hoje" class="botao-controle" type="button">
+            Hoje
+          </button>
+        </div>
+
+        <button id="botao-proximo-mes" class="botao-controle" type="button">
+          Próximo mês
+        </button>
+      </nav>
+
+      <main class="conteudo-principal">
+        <section class="area-calendario">
+          <div class="dias-semana" aria-hidden="true">
+            <span>Dom</span>
+            <span>Seg</span>
+            <span>Ter</span>
+            <span>Qua</span>
+            <span>Qui</span>
+            <span>Sex</span>
+            <span>Sáb</span>
+          
+          </div>
+
+          <section
+            id="calendario"
+            class="calendario"
+            aria-label="Calendário mensal de trilhas"
+          >
+           
+          </section>
+          </section>
+
+        <aside id="painel-evento" class="painel-evento">
+          <div class="painel-vazio">
+            <h2>Detalhes</h2>  
+              Nenhum evento selecionado.
+
+            <p>
+              Clique em um evento ou no botão de adicionar de um dia.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="rodape">
+        <p id="ultima-atualizacao-clima">
+          Clima ainda não atualizado
+        </p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

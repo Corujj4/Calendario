@@ -1,0 +1,375 @@
+/* ========================= */
+/* VARIÁVEIS */
+/* ========================= */
+
+:root {
+  --cor-fundo: #1b1b1b;
+  --cor-card: #2b2b2b;
+  --cor-card-hover: #333333;
+  --cor-painel: #2b2b2b;
+
+  --cor-borda: #444444;
+  --cor-borda-clara: #555555;
+
+  --cor-principal: #ff7a00;
+  --cor-principal-hover: #ff922e;
+  --cor-principal-escura: #332314;
+
+  --cor-texto: #f5f5f5;
+  --cor-texto-secundario: #b8b8b8;
+  --cor-texto-suave: #8f8f8f;
+
+  --cor-botao: #303030;
+  --cor-botao-hover: #3a3a3a;
+
+  --cor-evento-lancado: #d69e2e;
+  --cor-evento-lancado-fundo: #3a301b;
+  --cor-evento-lancado-hover: #493b1d;
+
+  --raio-pequeno: 7px;
+  --raio-card: 10px;
+
+  --transicao-padrao: 0.2s ease;
+}
+
+/* ========================= */
+/* RESET */
+/* ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= */
+/* GERAL */
+/* ========================= */
+
+body {
+  min-height: 100vh;
+
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+#app {
+  width: 95%;
+  max-width: 1700px;
+
+  margin: auto;
+  padding: 20px;
+}
+
+/* ========================= */
+/* CABEÇALHO */
+/* ========================= */
+
+.cabecalho-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.cabecalho-principal h1 {
+  color: var(--cor-principal);
+}
+
+.cabecalho-principal p {
+  margin-top: 5px;
+  color: var(--cor-texto-secundario);
+}
+
+/* ========================= */
+/* NAVEGAÇÃO */
+/* ========================= */
+
+.navegacao-calendario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.periodo-atual {
+  text-align: center;
+}
+
+.periodo-atual h2 {
+  margin-bottom: 8px;
+}
+
+/* ========================= */
+/* CONTEÚDO */
+/* ========================= */
+
+.conteudo-principal {
+  display: flex;
+  gap: 20px;
+}
+
+/* ========================= */
+/* CALENDÁRIO */
+/* ========================= */
+
+.area-calendario {
+  flex: 1;
+  min-width: 760px;
+}
+
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  margin-bottom: 10px;
+}
+
+.dias-semana span {
+  padding: 10px 0;
+
+  color: var(--cor-principal);
+
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: stretch;
+
+  gap: 8px;
+}
+
+/* ========================= */
+/* CARD DO DIA */
+/* ========================= */
+
+.card-dia {
+  min-height: 150px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: var(--cor-card);
+
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-card);
+
+  transition:
+    transform var(--transicao-padrao),
+    background var(--transicao-padrao),
+    box-shadow var(--transicao-padrao);
+}
+
+.card-dia:hover {
+  background: var(--cor-card-hover);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+.dia-vazio {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.cabecalho-dia {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.numero-dia {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.botao-adicionar-evento {
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--cor-principal);
+  color: #181818;
+
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+
+  transition:
+    background var(--transicao-padrao),
+    transform var(--transicao-padrao);
+}
+
+.botao-adicionar-evento:hover {
+  background: var(--cor-principal-hover);
+  transform: scale(1.08);
+}
+
+.botao-adicionar-evento:active {
+  transform: scale(1);
+}
+
+.clima-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  margin-top: 8px;
+
+  color: var(--cor-texto-suave);
+
+  font-size: 13px;
+}
+
+.eventos-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ========================= */
+/* RESUMO DO EVENTO */
+/* ========================= */
+
+.resumo-evento {
+  width: 100%;
+  padding: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+
+  border: none;
+  border-left: 4px solid var(--cor-evento-lancado);
+  border-radius: 5px;
+
+  background: var(--cor-evento-lancado-fundo);
+  color: var(--cor-texto);
+
+  text-align: left;
+
+  transition: background var(--transicao-padrao);
+}
+
+.resumo-evento span {
+  color: var(--cor-evento-lancado);
+  font-size: 12px;
+}
+
+.resumo-evento:hover {
+  background: var(--cor-evento-lancado-hover);
+}
+
+/* ========================= */
+/* DIA ATUAL */
+/* ========================= */
+
+.dia-atual {
+  border: 2px solid var(--cor-principal);
+  background: var(--cor-principal-escura);
+}
+
+.dia-atual .numero-dia {
+  color: var(--cor-principal);
+}
+
+/* ========================= */
+/* BOTÕES DE CONTROLE */
+/* ========================= */
+
+.botao-controle {
+  padding: 9px 14px;
+
+  border: 1px solid var(--cor-borda-clara);
+  border-radius: var(--raio-pequeno);
+
+  background: var(--cor-botao);
+  color: var(--cor-texto);
+
+  transition:
+    background var(--transicao-padrao),
+    border-color var(--transicao-padrao),
+    transform var(--transicao-padrao);
+}
+
+.botao-controle:hover {
+  border-color: var(--cor-principal);
+  background: var(--cor-botao-hover);
+
+  transform: translateY(-1px);
+}
+
+.botao-controle:active {
+  transform: translateY(0);
+}
+
+.botao-destaque {
+  border-color: var(--cor-principal);
+
+  background: var(--cor-principal);
+  color: #181818;
+
+  font-weight: bold;
+}
+
+.botao-destaque:hover {
+  background: var(--cor-principal-hover);
+  color: #181818;
+}
+
+/* ========================= */
+/* PAINEL LATERAL */
+/* ========================= */
+
+.painel-evento {
+  width: 330px;
+  min-height: 700px;
+  padding: 20px;
+  flex-shrink: 0;
+
+  background: var(--cor-painel);
+
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-card);
+}
+
+.painel-vazio {
+  color: var(--cor-texto-secundario);
+  text-align: center;
+}
+
+.painel-vazio h2 {
+  margin-bottom: 10px;
+  color: var(--cor-texto);
+}
+
+/* ========================= */
+/* RODAPÉ */
+/* ========================= */
+
+.rodape {
+  margin-top: 20px;
+
+  color: var(--cor-texto-secundario);
+
+  text-align: center;
+}
