@@ -251,23 +251,65 @@ button {
 
 .resumo-evento {
   width: 100%;
-  padding: 8px;
+  padding: 6px 8px;
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
+  align-items: center;
+  gap: 7px;
 
   border: none;
-  border-left: 4px solid var(--cor-evento-lancado);
   border-radius: 5px;
 
-  background: var(--cor-evento-lancado-fundo);
+  background: transparent;
   color: var(--cor-texto);
 
   text-align: left;
 
-  transition: background var(--transicao-padrao);
+  transition:
+    background var(--transicao-padrao),
+    transform var(--transicao-padrao);
+}
+
+.resumo-evento::before {
+  content: "";
+
+  width: 9px;
+  height: 9px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.resumo-evento strong {
+  overflow: hidden;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resumo-evento span {
+  display: none;
+}
+
+.resumo-evento:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(2px);
+}
+
+.evento-lancado::before {
+  background: #3b82f6;
+}
+
+.evento-confirmado::before {
+  background: #22c55e;
+}
+
+.evento-cancelado::before {
+  background: #ef4444;
 }
 
 .resumo-evento span {
@@ -372,4 +414,168 @@ button {
   color: var(--cor-texto-secundario);
 
   text-align: center;
+}
+/* ========================= */
+/* FORMULÁRIO DE EVENTO */
+/* ========================= */
+
+.formulario-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cabecalho-painel {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 12px;
+}
+
+.cabecalho-painel h2 {
+  color: var(--cor-principal);
+}
+
+.cabecalho-painel p {
+  margin-top: 4px;
+  color: var(--cor-texto-secundario);
+}
+
+.botao-fechar-painel {
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid var(--cor-borda);
+  border-radius: 50%;
+
+  background: var(--cor-botao);
+  color: var(--cor-texto);
+
+  font-size: 22px;
+  line-height: 1;
+
+  transition:
+    background var(--transicao-padrao),
+    border-color var(--transicao-padrao);
+}
+
+.botao-fechar-painel:hover {
+  border-color: var(--cor-principal);
+  background: var(--cor-botao-hover);
+}
+
+.formulario-evento label {
+  margin-top: 5px;
+
+  color: var(--cor-texto-secundario);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.formulario-evento input,
+.formulario-evento textarea,
+.formulario-evento select {
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+
+  outline: none;
+
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+
+  font: inherit;
+
+  transition: border-color var(--transicao-padrao);
+}
+
+.formulario-evento textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formulario-evento input:focus,
+.formulario-evento textarea:focus,
+.formulario-evento select:focus {
+  border-color: var(--cor-principal);
+}
+
+.formulario-evento button[type="submit"] {
+  margin-top: 12px;
+}
+.evento-rosa {
+  border-left-color: #ff5fa2;
+  background: #3a2230;
+}
+
+.evento-rosa span {
+  color: #ff8fbd;
+}
+
+.evento-azul {
+  border-left-color: #4da3ff;
+  background: #1f2f3d;
+}
+
+.evento-azul span {
+  color: #7fbdff;
+}
+
+.evento-verde {
+  border-left-color: #45c97a;
+  background: #1f3528;
+}
+
+.evento-verde span {
+  color: #75dfa0;
+}
+
+.evento-vermelho {
+  border-left-color: #ff5a5a;
+  background: #3a2020;
+}
+
+.evento-vermelho span {
+  color: #ff8a8a;
+}
+.detalhes-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.campo-detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-detalhe strong {
+  color: var(--cor-texto-secundario);
+  font-size: 14px;
+}
+
+.campo-detalhe p {
+  line-height: 1.5;
+}
+
+.acoes-evento {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.status-lancado {
+  color: #3b82f6;
+}
+
+.status-confirmado {
+  color: #22c55e;
+}
+
+.status-cancelado {
+  color: #ef4444;
 }

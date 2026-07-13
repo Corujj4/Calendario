@@ -46,6 +46,16 @@ export function criarCalendario() {
     const cardDia = document.createElement("article");
 
     cardDia.classList.add("card-dia");
+    const dataCompleta = new Date(anoAtual, mesAtual, dia);
+
+        const dataFormatada = [
+        dataCompleta.getFullYear(),
+        String(dataCompleta.getMonth() + 1).padStart(2, "0"),
+        String(dataCompleta.getDate()).padStart(2, "0"),
+        ].join("-");
+
+        cardDia.dataset.dia = dia;
+        cardDia.dataset.data = dataFormatada;
 
     const ehHoje =
       dia === hoje.getDate() &&
