@@ -88,6 +88,12 @@ export function criarCalendario() {
 
     calendario.appendChild(cardDia);
   }
+
+  
+  document.dispatchEvent(
+  new CustomEvent("calendarioRenderizado"),
+);
+
 }
 
 botaoMesAnterior.addEventListener("click", () => {
@@ -111,6 +117,8 @@ botaoProximoMes.addEventListener("click", () => {
 
   criarCalendario();
 });
+
+
 
 botaoHoje.addEventListener("click", () => {
   anoAtual = hoje.getFullYear();

@@ -1,37 +1,42 @@
+import {
+  carregarEventos,
+  salvarEventos,
+} from "../services/storageService.js";
+
+
 const painelEvento = document.querySelector("#painel-evento");
 const calendario = document.querySelector("#calendario");
 
-const eventos = [];
+
+const eventos = carregarEventos();
+const iconesStatus = {
+  confirmado: "🟢",
+  lancado: "🔵",
+  cancelado: "🔴",
+};
 
 let dataSelecionada = null;
 let eventoEditando = null;
 
 export function configurarEventos() {
+    document.addEventListener(
+  "calendarioRenderizado",
+  mostrarTodosEventos,
+);
   calendario.addEventListener("click", tratarCliqueCalendario);
 
   painelEvento.addEventListener("click", tratarCliquePainel);
   painelEvento.addEventListener("submit", salvarEvento);
 }
 
+function salvarEventosNoNavegador() {
+  salvarEventos(eventos);
+}
+
 function tratarCliquePainel(eventoClique) {
-  const botaoExcluir = eventoClique.target.closest(
-  '[data-acao="excluir"]',
-);
-
-if (botaoExcluir) {
-  const eventoId = botaoExcluir.dataset.eventoId;
-
-  abrirConfirmacaoExclusao(eventoId);
-  return;
-}
-
-const botaoConfirmarExclusao = eventoClique.target.closest(
-  '[data-acao="confirmar-exclusao"]',
-);
-
-if (botaoConfirmarExclusao) {
-  excluirEvento(botaoConfirmarExclusao.dataset.eventoId);
-}
+  const botaoFechar = eventoClique.target.closest(
+    "#botao-fechar-painel",
+  );
 
   if (botaoFechar) {
     fecharPainel();
@@ -43,10 +48,43 @@ if (botaoConfirmarExclusao) {
   );
 
   if (botaoEditar) {
-    const eventoId = botaoEditar.dataset.eventoId;
-
-    abrirFormularioEdicao(eventoId);
+    abrirFormularioEdicao(botaoEditar.dataset.eventoId);
+    return;
   }
+
+  const botaoExcluir = eventoClique.target.closest(
+    '[data-acao="excluir"]',
+  );
+
+  if (botaoExcluir) {
+    abrirConfirmacaoExclusao(botaoExcluir.dataset.eventoId);
+    return;
+  }
+
+  const botaoCancelarExclusao = eventoClique.target.closest(
+    '[data-acao="cancelar-exclusao"]',
+  );
+
+  if (botaoCancelarExclusao) {
+    abrirDetalhesEvento(botaoCancelarExclusao.dataset.eventoId);
+    return;
+  }
+
+  const botaoConfirmarExclusao = eventoClique.target.closest(
+    '[data-acao="confirmar-exclusao"]',
+  );
+
+  if (botaoConfirmarExclusao) {
+    excluirEvento(botaoConfirmarExclusao.dataset.eventoId);
+  }
+}
+
+function mostrarTodosEventos() {
+  
+
+  eventos.forEach((evento) => {
+    mostrarEventoNoCalendario(evento);
+  });
 }
 
 function tratarCliqueCalendario(eventoClique) {
@@ -223,7 +261,7 @@ function abrirConfirmacaoExclusao(eventoId) {
         <button
           class="botao-controle"
           type="button"
-          data-acao="editar"
+          data-acao="cancelar-exclusao"
           data-evento-id="${eventoEncontrado.id}"
         >
           Cancelar
@@ -252,6 +290,7 @@ function excluirEvento(eventoId) {
   }
 
   eventos.splice(indiceEvento, 1);
+  salvarEventosNoNavegador();
 
   const botaoEvento = calendario.querySelector(
     `[data-evento-id="${eventoId}"]`,
@@ -304,6 +343,7 @@ function salvarEvento(eventoSubmit) {
     eventoExistente.titulo = formulario.titulo.value.trim();
     eventoExistente.descricao = formulario.descricao.value.trim();
     eventoExistente.status = formulario.status.value;
+    salvarEventosNoNavegador();
 
     atualizarEventoNoCalendario(eventoExistente);
 
@@ -321,6 +361,7 @@ function salvarEvento(eventoSubmit) {
   };
 
   eventos.push(novoEvento);
+  salvarEventosNoNavegador();
 
   mostrarEventoNoCalendario(novoEvento);
   fecharPainel();
@@ -348,9 +389,11 @@ function mostrarEventoNoCalendario(evento) {
   botaoEvento.dataset.eventoId = evento.id;
 
   botaoEvento.innerHTML = `
-    <strong>${evento.titulo}</strong>
-    <span>${formatarStatus(evento.status)}</span>
-  `;
+  <strong>
+    ${iconesStatus[evento.status]}
+    ${evento.titulo}
+  </strong>
+`;
 
   areaEventos.appendChild(botaoEvento);
 }
@@ -367,9 +410,11 @@ function atualizarEventoNoCalendario(evento) {
     `resumo-evento evento-${evento.status}`;
 
   botaoEvento.innerHTML = `
-    <strong>${evento.titulo}</strong>
-    <span>${formatarStatus(evento.status)}</span>
-  `;
+  <strong>
+    ${iconesStatus[evento.status]}
+    ${evento.titulo}
+  </strong>
+`;
 }
 
 function formatarStatus(status) {

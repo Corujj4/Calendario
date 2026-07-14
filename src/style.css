@@ -22,10 +22,6 @@
   --cor-botao: #303030;
   --cor-botao-hover: #3a3a3a;
 
-  --cor-evento-lancado: #d69e2e;
-  --cor-evento-lancado-fundo: #3a301b;
-  --cor-evento-lancado-hover: #493b1d;
-
   --raio-pequeno: 7px;
   --raio-card: 10px;
 
@@ -95,18 +91,22 @@ button {
 
 .navegacao-calendario {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 12px;
 
   margin-bottom: 20px;
 }
 
-.periodo-atual {
-  text-align: center;
-}
+.controles-mes {
+  display: flex;
 
-.periodo-atual h2 {
-  margin-bottom: 8px;
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+
+  width: 100%;
 }
 
 /* ========================= */
@@ -228,15 +228,43 @@ button {
 }
 
 .clima-dia {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
 
-  margin-top: 8px;
+    gap: 4px;
 
-  color: var(--cor-texto-suave);
+    margin-top: 8px;
+    margin-bottom: 8px;
 
-  font-size: 13px;
+    padding-left: 8px;
+
+    border-left: 3px solid transparent;
+}
+.linha-clima {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.linha-clima strong {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.chance-chuva {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.icone-clima {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .eventos-dia {
@@ -250,24 +278,34 @@ button {
 /* ========================= */
 
 .resumo-evento {
-  width: 100%;
-  padding: 6px 8px;
+    width: 100%;
 
-  display: flex;
-  align-items: center;
-  gap: 7px;
+    padding: 10px 12px;
 
-  border: none;
-  border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-  background: transparent;
-  color: var(--cor-texto);
+    border: none;
+    border-left: 4px solid transparent;
+    border-radius: 8px;
 
-  text-align: left;
+    background: rgba(255,255,255,.05);
 
-  transition:
-    background var(--transicao-padrao),
-    transform var(--transicao-padrao);
+    text-align: left;
+
+    transition:
+        transform .15s,
+        background .15s;
+}
+
+.resumo-evento:hover {
+    transform: translateX(3px);
+
+    background: rgba(255,255,255,.08);
+}
+.resumo-evento strong {
+    font-size: 14px;
 }
 
 .resumo-evento::before {
@@ -310,15 +348,6 @@ button {
 
 .evento-cancelado::before {
   background: #ef4444;
-}
-
-.resumo-evento span {
-  color: var(--cor-evento-lancado);
-  font-size: 12px;
-}
-
-.resumo-evento:hover {
-  background: var(--cor-evento-lancado-hover);
 }
 
 /* ========================= */
@@ -506,41 +535,7 @@ button {
 .formulario-evento button[type="submit"] {
   margin-top: 12px;
 }
-.evento-rosa {
-  border-left-color: #ff5fa2;
-  background: #3a2230;
-}
 
-.evento-rosa span {
-  color: #ff8fbd;
-}
-
-.evento-azul {
-  border-left-color: #4da3ff;
-  background: #1f2f3d;
-}
-
-.evento-azul span {
-  color: #7fbdff;
-}
-
-.evento-verde {
-  border-left-color: #45c97a;
-  background: #1f3528;
-}
-
-.evento-verde span {
-  color: #75dfa0;
-}
-
-.evento-vermelho {
-  border-left-color: #ff5a5a;
-  background: #3a2020;
-}
-
-.evento-vermelho span {
-  color: #ff8a8a;
-}
 .detalhes-evento {
   display: flex;
   flex-direction: column;
@@ -594,4 +589,72 @@ button {
 .botao-excluir:hover {
   border-color: #ff6666;
   background: #ff6666;
+}
+.icone-clima {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+}
+
+.icone-clima svg {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.clima-dia {
+  padding-left: 8px;
+  border-left: 3px solid transparent;
+  font-size: 11px;
+  
+}
+
+.clima-dia strong {
+    font-size: 13px;
+}
+
+.clima-sol {
+  color: #ffc247;
+  border-left-color: #ffc247;
+}
+
+.clima-nublado {
+  color: #aeb8c4;
+  border-left-color: #778493;
+}
+
+.clima-chuva {
+  color: #62a9ff;
+  border-left-color: #3b82f6;
+}
+
+.clima-temporal {
+  color: #b69cff;
+  border-left-color: #8b5cf6;
+}
+
+.clima-neblina {
+  color: #b8b8b8;
+  border-left-color: #777777;
+}
+
+.clima-neve {
+  color: #bfe9ff;
+  border-left-color: #81d4fa;
+}
+.evento-confirmado {
+    border-left-color: #43c463;
+}
+.evento-lancado {
+    border-left-color: #3b82f6;
+}
+.evento-cancelado {
+    border-left-color: #ef4444;
 }

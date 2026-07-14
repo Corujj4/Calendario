@@ -1,6 +1,8 @@
 import "./style.css";
-import { criarCalendario } from "./calendario.js";
-import { configurarEventos } from "./eventos.js";
+import { criarCalendario } from "./components/calendario.js";
+import { configurarEventos } from "./services/eventos.js";
+import { configurarClima } from "./services/clima.js";
 
-criarCalendario();
 configurarEventos();
+criarCalendario();
+configurarClima();
