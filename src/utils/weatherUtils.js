@@ -13,9 +13,39 @@ const icones = {
     </svg>
   `,
 
+  solParcial: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="8" cy="8" r="3"></circle>
+      <path d="M8 2v2"></path>
+      <path d="M2 8h2"></path>
+      <path d="m3.8 3.8 1.4 1.4"></path>
+      <path d="m12.2 3.8-1.4 1.4"></path>
+      <path d="M17.5 20H7a4 4 0 0 1-.4-7.98A6 6 0 0 1 18.1 11 4.5 4.5 0 0 1 17.5 20Z"></path>
+    </svg>
+  `,
+
+  parcialmenteNublado: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="7" cy="7" r="2.5"></circle>
+      <path d="M7 2v1.5"></path>
+      <path d="M2 7h1.5"></path>
+      <path d="m3.5 3.5 1 1"></path>
+      <path d="M17.5 20H6a4 4 0 0 1-.4-7.98A6.5 6.5 0 0 1 18.2 10.5 4.8 4.8 0 0 1 17.5 20Z"></path>
+    </svg>
+  `,
+
   nuvem: `
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M17.5 19H6a4 4 0 0 1-.4-7.98A6.5 6.5 0 0 1 18.2 9.5 4.8 4.8 0 0 1 17.5 19Z"></path>
+    </svg>
+  `,
+
+  garoa: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.5 15H6a4 4 0 0 1-.4-7.98A6.5 6.5 0 0 1 18.2 5.5 4.8 4.8 0 0 1 17.5 15Z"></path>
+      <path d="M8 19h.01"></path>
+      <path d="M12 21h.01"></path>
+      <path d="M16 19h.01"></path>
     </svg>
   `,
 
@@ -52,50 +82,46 @@ const icones = {
   `,
 };
 
-export function obterVisualClima(codigo) {
-  if (codigo === 0) {
-    return {
-      icone: icones.sol,
-      classe: "clima-sol",
-      descricao: "Céu limpo",
-    };
-  }
+const visuaisClima = {
+  "muito-sol": {
+    icone: icones.sol,
+    classe: "clima-muito-sol",
+    descricao: "Muito sol",
+  },
 
-  if ([1, 2, 3].includes(codigo)) {
-    return {
-      icone: icones.nuvem,
-      classe: "clima-nublado",
-      descricao: "Nublado",
-    };
-  }
+  sol: {
+    icone: icones.sol,
+    classe: "clima-sol",
+    descricao: "Ensolarado",
+  },
 
-  if ([45, 48].includes(codigo)) {
-    return {
-      icone: icones.neblina,
-      classe: "clima-neblina",
-      descricao: "Neblina",
-    };
-  }
+  nublado: {
+    icone: icones.nuvem,
+    classe: "clima-nublado",
+    descricao: "Nublado",
+  },
 
-  if ([71, 73, 75, 77, 85, 86].includes(codigo)) {
-    return {
-      icone: icones.neve,
-      classe: "clima-neve",
-      descricao: "Neve",
-    };
-  }
-
-  if ([95, 96, 99].includes(codigo)) {
-    return {
-      icone: icones.temporal,
-      classe: "clima-temporal",
-      descricao: "Temporal",
-    };
-  }
-
-  return {
+  chuva: {
     icone: icones.chuva,
     classe: "clima-chuva",
     descricao: "Chuva",
-  };
+  },
+
+  "chuva-forte": {
+    icone: icones.temporal,
+    classe: "clima-temporal",
+    descricao: "Chuva forte ou temporal",
+  },
+};
+
+export function obterVisualClima(tipoClima) {
+  return visuaisClima[tipoClima] ??
+    visuaisClima.nublado;
 }
+
+const visualPadrao = {
+  icone: icones.nuvem,
+  classe: "clima-nublado",
+  descricao: "Condição desconhecida",
+};
+

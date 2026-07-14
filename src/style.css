@@ -693,3 +693,21 @@ button {
 .sem-eventos {
   color: var(--cor-texto-secundario);
 }
+.clima-sol-parcial {
+  color: #ffd166;
+  border-left-color: #f5a623;
+}
+
+.clima-parcial {
+  color: #d9e2ec;
+  border-left-color: #8fa3b8;
+}
+
+.clima-chuva-forte {
+  color: #4f8cff;
+  border-left-color: #245ac4;
+}
+.clima-muito-sol {
+  color: #ffd43b;
+  border-left-color: #ff9f1c;
+}
