@@ -12,10 +12,15 @@ const ultimaAtualizacao = document.querySelector(
 );
 
 export function configurarClima() {
-  botaoAtualizarClima.addEventListener(
-    "click",
-    atualizarClima,
-  );
+    botaoAtualizarClima.addEventListener(
+        "click",
+        atualizarClima,
+    );
+
+    document.addEventListener(
+        "calendarioRenderizado",
+        atualizarClima,
+    );
 }
 
 async function atualizarClima() {

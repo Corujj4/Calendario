@@ -9,11 +9,7 @@ const calendario = document.querySelector("#calendario");
 
 
 const eventos = carregarEventos();
-const iconesStatus = {
-  confirmado: "🟢",
-  lancado: "🔵",
-  cancelado: "🔴",
-};
+
 
 let dataSelecionada = null;
 let eventoEditando = null;
@@ -38,6 +34,15 @@ function tratarCliquePainel(eventoClique) {
     "#botao-fechar-painel",
   );
 
+  const eventoDoPainel = eventoClique.target.closest(
+  ".evento-painel",
+);
+
+if (eventoDoPainel) {
+  abrirDetalhesEvento(eventoDoPainel.dataset.eventoId);
+  return;
+}
+
   if (botaoFechar) {
     fecharPainel();
     return;
@@ -51,6 +56,20 @@ function tratarCliquePainel(eventoClique) {
     abrirFormularioEdicao(botaoEditar.dataset.eventoId);
     return;
   }
+  const botaoNovoEvento = eventoClique.target.closest(
+    '[data-acao="novo-evento"]'
+);
+
+if (botaoNovoEvento) {
+
+    dataSelecionada = botaoNovoEvento.dataset.data;
+
+    abrirFormularioNovoEvento(
+        Number(dataSelecionada.slice(-2))
+    );
+
+    return;
+}
 
   const botaoExcluir = eventoClique.target.closest(
     '[data-acao="excluir"]',
@@ -91,25 +110,17 @@ function tratarCliqueCalendario(eventoClique) {
   const botaoEvento = eventoClique.target.closest(".resumo-evento");
 
   if (botaoEvento) {
-    const eventoId = botaoEvento.dataset.eventoId;
-
-    abrirDetalhesEvento(eventoId);
+    abrirDetalhesEvento(botaoEvento.dataset.eventoId);
     return;
   }
 
-  const botaoAdicionar = eventoClique.target.closest(
-    ".botao-adicionar-evento",
-  );
 
-  if (!botaoAdicionar) {
-    return;
+
+  const cardDia = eventoClique.target.closest(".card-dia");
+
+  if (cardDia && !cardDia.classList.contains("dia-vazio")) {
+    abrirDetalhesDia(cardDia);
   }
-
-  const cardDia = botaoAdicionar.closest(".card-dia");
-
-  dataSelecionada = cardDia.dataset.data;
-
-  abrirFormularioNovoEvento(cardDia.dataset.dia);
 }
 
 function abrirFormularioNovoEvento(dia) {
@@ -137,6 +148,13 @@ function abrirFormularioNovoEvento(dia) {
         name="titulo"
         type="text"
         required
+      />
+      <label for="local-evento">Local</label>
+      <input
+        id="local-evento"
+        name="local"
+        type="text"
+        placeholder="Ex.: Morro do Elefante"
       />
 
       <label for="descricao-evento">Descrição</label>
@@ -190,6 +208,11 @@ function abrirDetalhesEvento(eventoId) {
         </button>
       </div>
 
+        <div class="campo-detalhe">
+        <strong>Local</strong>
+        <p>${eventoEncontrado.local || "Não informado"}</p>
+      </div>
+
       <div class="campo-detalhe">
         <strong>Descrição</strong>
         <p>${eventoEncontrado.descricao}</p>
@@ -223,6 +246,84 @@ function abrirDetalhesEvento(eventoId) {
       </div>
     </div>
   `;
+}
+
+function abrirDetalhesDia(cardDia) {
+  const data = cardDia.dataset.data;
+
+  const eventosDoDia = eventos.filter(
+    (evento) => evento.data === data,
+  );
+
+  const climaDia =
+    cardDia.querySelector(".clima-dia")?.innerHTML ??
+    "<span>Clima indisponível</span>";
+
+  const listaEventos =
+    eventosDoDia.length > 0
+      ? eventosDoDia
+          .map(
+            (evento) => `
+              <button
+                class="evento-painel evento-${evento.status}"
+                type="button"
+                data-evento-id="${evento.id}"
+              >
+                <strong>${evento.titulo}</strong>
+                <span>${formatarStatus(evento.status)}</span>
+              </button>
+            `,
+          )
+          .join("")
+      : "<p class='sem-eventos'>Nenhum evento neste dia.</p>";
+
+  painelEvento.innerHTML = `
+    <div class="detalhes-dia">
+            <div class="cabecalho-painel">
+          <h2>${formatarData(data)}</h2>
+
+          <button
+            id="botao-fechar-painel"
+            class="botao-fechar-painel"
+            type="button"
+            aria-label="Fechar painel"
+          >
+            ×
+          </button>
+        </div>
+
+      <section class="clima-painel">
+        <h3>Previsão do tempo</h3>
+
+        <div class="conteudo-clima-painel">
+          ${climaDia}
+        </div>
+      </section>
+
+      <section class="eventos-painel">
+        <h3>Eventos</h3>
+
+        <div class="lista-eventos-painel">
+          ${listaEventos}
+        </div>
+      </section>
+
+      <button
+        class="botao-controle botao-destaque"
+        type="button"
+        data-acao="novo-evento"
+        data-data="${data}"
+      >
+        Novo evento
+      </button>
+    </div>
+  `;
+}
+
+function formatarData(data) {
+  const [ano, mes, dia] = data.split("-");
+
+  return `${dia}/${mes}/${ano}`;
 }
 
 function abrirConfirmacaoExclusao(eventoId) {
@@ -318,6 +419,9 @@ function abrirFormularioEdicao(eventoId) {
 
   document.querySelector("#titulo-evento").value =
     evento.titulo;
+  
+    document.querySelector("#local-evento").value =
+  evento.local ?? "";
 
   document.querySelector("#descricao-evento").value =
     evento.descricao;
@@ -341,6 +445,7 @@ function salvarEvento(eventoSubmit) {
     }
 
     eventoExistente.titulo = formulario.titulo.value.trim();
+    eventoExistente.local = formulario.local.value.trim();
     eventoExistente.descricao = formulario.descricao.value.trim();
     eventoExistente.status = formulario.status.value;
     salvarEventosNoNavegador();
@@ -358,6 +463,7 @@ function salvarEvento(eventoSubmit) {
     titulo: formulario.titulo.value.trim(),
     descricao: formulario.descricao.value.trim(),
     status: formulario.status.value,
+    local: formulario.local.value.trim(),
   };
 
   eventos.push(novoEvento);
@@ -389,10 +495,8 @@ function mostrarEventoNoCalendario(evento) {
   botaoEvento.dataset.eventoId = evento.id;
 
   botaoEvento.innerHTML = `
-  <strong>
-    ${iconesStatus[evento.status]}
-    ${evento.titulo}
-  </strong>
+  <strong>${evento.titulo}</strong>
+  <span>${formatarStatus(evento.status)}</span>
 `;
 
   areaEventos.appendChild(botaoEvento);
@@ -410,10 +514,8 @@ function atualizarEventoNoCalendario(evento) {
     `resumo-evento evento-${evento.status}`;
 
   botaoEvento.innerHTML = `
-  <strong>
-    ${iconesStatus[evento.status]}
-    ${evento.titulo}
-  </strong>
+  <strong>${evento.titulo}</strong>
+  <span>${formatarStatus(evento.status)}</span>
 `;
 }
 

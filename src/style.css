@@ -228,49 +228,58 @@ button {
 }
 
 .clima-dia {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
-    gap: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 8px;
 
-    margin-top: 8px;
-    margin-bottom: 8px;
-
-    padding-left: 8px;
-
-    border-left: 3px solid transparent;
+  border-left: 3px solid transparent;
 }
+
 .linha-clima {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .linha-clima strong {
-    font-size: 16px;
-    font-weight: 700;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .chance-chuva {
-    font-size: 14px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .icone-clima {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.icone-clima svg {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .eventos-dia {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-top: 4px;
 }
 
 /* ========================= */
@@ -278,34 +287,25 @@ button {
 /* ========================= */
 
 .resumo-evento {
-    width: 100%;
+  width: 100%;
+  padding: 10px 12px;
 
-    padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  border: none;
+  border-left: 4px solid transparent;
+  border-radius: 8px;
 
-    border: none;
-    border-left: 4px solid transparent;
-    border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cor-texto);
 
-    background: rgba(255,255,255,.05);
+  text-align: left;
 
-    text-align: left;
-
-    transition:
-        transform .15s,
-        background .15s;
-}
-
-.resumo-evento:hover {
-    transform: translateX(3px);
-
-    background: rgba(255,255,255,.08);
-}
-.resumo-evento strong {
-    font-size: 14px;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .resumo-evento::before {
@@ -322,7 +322,9 @@ button {
 .resumo-evento strong {
   overflow: hidden;
 
-  font-size: 13px;
+  color: var(--cor-texto);
+
+  font-size: 14px;
   font-weight: 600;
 
   text-overflow: ellipsis;
@@ -334,16 +336,28 @@ button {
 }
 
 .resumo-evento:hover {
-  background: rgba(255, 255, 255, 0.06);
-  transform: translateX(2px);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(3px);
+}
+
+.evento-lancado {
+  border-left-color: #3b82f6;
 }
 
 .evento-lancado::before {
   background: #3b82f6;
 }
 
+.evento-confirmado {
+  border-left-color: #43c463;
+}
+
 .evento-confirmado::before {
-  background: #22c55e;
+  background: #43c463;
+}
+
+.evento-cancelado {
+  border-left-color: #ef4444;
 }
 
 .evento-cancelado::before {
@@ -590,35 +604,6 @@ button {
   border-color: #ff6666;
   background: #ff6666;
 }
-.icone-clima {
-  width: 30px;
-  height: 30px;
-
-  display: grid;
-  place-items: center;
-}
-
-.icone-clima svg {
-  width: 100%;
-  height: 100%;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.clima-dia {
-  padding-left: 8px;
-  border-left: 3px solid transparent;
-  font-size: 11px;
-  
-}
-
-.clima-dia strong {
-    font-size: 13px;
-}
 
 .clima-sol {
   color: #ffc247;
@@ -647,14 +632,64 @@ button {
 
 .clima-neve {
   color: #bfe9ff;
-  border-left-color: #81d4fa;
+  border-left-color: #81d4fa;}
+  .detalhes-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
-.evento-confirmado {
-    border-left-color: #43c463;
+
+.clima-painel,
+.eventos-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.evento-lancado {
-    border-left-color: #3b82f6;
+
+.clima-painel h3,
+.eventos-painel h3 {
+  color: var(--cor-texto-secundario);
+  font-size: 14px;
 }
-.evento-cancelado {
-    border-left-color: #ef4444;
+
+.conteudo-clima-painel {
+  padding: 12px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+}
+
+.lista-eventos-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.evento-painel {
+  padding: 10px 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  border: none;
+  border-left: 4px solid transparent;
+  border-radius: var(--raio-pequeno);
+
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cor-texto);
+
+  text-align: left;
+}
+
+.evento-painel span {
+  color: var(--cor-texto-secundario);
+  font-size: 12px;
+}
+
+.sem-eventos {
+  color: var(--cor-texto-secundario);
 }

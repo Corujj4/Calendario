@@ -26,6 +26,11 @@ let anoAtual = hoje.getFullYear();
 let mesAtual = hoje.getMonth();
 
 export function criarCalendario() {
+
+  document.dispatchEvent(
+  new Event("calendarioRenderizado")
+);
+
   const primeiroDiaSemana = new Date(anoAtual, mesAtual, 1).getDay();
 
   const quantidadeDias = new Date(anoAtual, mesAtual + 1, 0).getDate();
@@ -70,13 +75,6 @@ export function criarCalendario() {
       <header class="cabecalho-dia">
         <span class="numero-dia">${dia}</span>
 
-        <button
-          class="botao-adicionar-evento"
-          type="button"
-          aria-label="Adicionar evento no dia ${dia}"
-        >
-          +
-        </button>
       </header>
 
       <section class="clima-dia">
