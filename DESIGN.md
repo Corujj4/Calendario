@@ -1,39 +1,27 @@
-# Identidade Visual
+# Design do Calendário de Trilhas
 
-## Cores
+## Objetivo
 
-Cor principal:
-#FF7A00
+Sistema interno para organização de trilhas, com calendário mensal, previsão do tempo e gerenciamento de eventos.
 
-Tema:
-Escuro
+A interface deve ser simples, rápida e fácil de entender, sem excesso de informações.
 
-## Botões
+---
 
-Raio:
-7px
+## Identidade visual
 
-## Cards
+### Tema
 
-Raio:
-10px
+Tema escuro em tons de:
 
-## Eventos
+- preto
+- grafite
+- cinza
+- laranja
 
-🟦 Lançado
+O fundo não utiliza preto absoluto para reduzir o cansaço visual.
 
-🟩 Confirmado
+### Cor principal
 
-🟥 Cancelado
-
-## Fonte
-
-Arial
-
-## Painel
-
-Lateral direita fixa.
-
-Nunca utilizar popups.
-
-Todo CRUD será realizado no painel lateral.
+```css
+#ff7a00

@@ -711,3 +711,136 @@ button {
   color: #ffd43b;
   border-left-color: #ff9f1c;
 }
+.fonte-clima {
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  font-style: italic;
+}
+.data-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.data-painel span {
+  color: var(--cor-principal);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.data-painel h2 {
+  color: var(--cor-texto);
+  font-size: 20px;
+}
+.conteudo-clima-painel .clima-dia {
+  margin: 0;
+  padding: 0;
+
+  border-left: none;
+}
+
+.conteudo-clima-painel .icone-clima {
+  width: 34px;
+  height: 34px;
+}
+
+.conteudo-clima-painel .linha-clima strong {
+  font-size: 18px;
+}
+
+.conteudo-clima-painel .chance-chuva {
+  font-size: 15px;
+}
+
+.conteudo-clima-painel .fonte-clima {
+  margin-top: 4px;
+}
+.timeline-painel {
+  margin-top: 20px;
+}
+
+.timeline-clima {
+  display: flex;
+  gap: 10px;
+
+  padding-bottom: 8px;
+
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.timeline-item {
+  min-width: 76px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+
+  padding: 10px 8px;
+
+  background: #24272b;
+  border: 1px solid #35393e;
+  border-radius: 8px;
+}
+
+.timeline-item strong {
+  font-size: 13px;
+  color: var(--cor-texto);
+}
+
+.timeline-temperatura {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-principal);
+}
+
+.timeline-chuva {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.timeline-indisponivel {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+.detalhe-evento {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin: 0;
+
+  color: var(--cor-texto);
+  line-height: 1.6;
+}
+
+.detalhe-icone {
+  flex-shrink: 0;
+  font-size: 17px;
+}
+
+.status-bolinha {
+  width: 10px;
+  height: 10px;
+
+  margin-top: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-lancado {
+  color: #4da3ff;
+}
+
+.status-confirmado {
+  color: #45c46b;
+}
+
+.status-cancelado {
+  color: #ef5350;
+}

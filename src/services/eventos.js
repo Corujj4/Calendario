@@ -1,24 +1,16 @@
-import {
-  carregarEventos,
-  salvarEventos,
-} from "../services/storageService.js";
-
+import { obterPrevisaoPorData } from "../services/clima.js";
+import { carregarEventos, salvarEventos } from "../services/storageService.js";
 
 const painelEvento = document.querySelector("#painel-evento");
 const calendario = document.querySelector("#calendario");
 
-
 const eventos = carregarEventos();
-
 
 let dataSelecionada = null;
 let eventoEditando = null;
 
 export function configurarEventos() {
-    document.addEventListener(
-  "calendarioRenderizado",
-  mostrarTodosEventos,
-);
+  document.addEventListener("calendarioRenderizado", mostrarTodosEventos);
   calendario.addEventListener("click", tratarCliqueCalendario);
 
   painelEvento.addEventListener("click", tratarCliquePainel);
@@ -30,50 +22,39 @@ function salvarEventosNoNavegador() {
 }
 
 function tratarCliquePainel(eventoClique) {
-  const botaoFechar = eventoClique.target.closest(
-    "#botao-fechar-painel",
-  );
+  const botaoFechar = eventoClique.target.closest("#botao-fechar-painel");
 
-  const eventoDoPainel = eventoClique.target.closest(
-  ".evento-painel",
-);
+  const eventoDoPainel = eventoClique.target.closest(".evento-painel");
 
-if (eventoDoPainel) {
-  abrirDetalhesEvento(eventoDoPainel.dataset.eventoId);
-  return;
-}
+  if (eventoDoPainel) {
+    abrirDetalhesEvento(eventoDoPainel.dataset.eventoId);
+    return;
+  }
 
   if (botaoFechar) {
     fecharPainel();
     return;
   }
 
-  const botaoEditar = eventoClique.target.closest(
-    '[data-acao="editar"]',
-  );
+  const botaoEditar = eventoClique.target.closest('[data-acao="editar"]');
 
   if (botaoEditar) {
     abrirFormularioEdicao(botaoEditar.dataset.eventoId);
     return;
   }
   const botaoNovoEvento = eventoClique.target.closest(
-    '[data-acao="novo-evento"]'
-);
+    '[data-acao="novo-evento"]',
+  );
 
-if (botaoNovoEvento) {
-
+  if (botaoNovoEvento) {
     dataSelecionada = botaoNovoEvento.dataset.data;
 
-    abrirFormularioNovoEvento(
-        Number(dataSelecionada.slice(-2))
-    );
+    abrirFormularioNovoEvento(Number(dataSelecionada.slice(-2)));
 
     return;
-}
+  }
 
-  const botaoExcluir = eventoClique.target.closest(
-    '[data-acao="excluir"]',
-  );
+  const botaoExcluir = eventoClique.target.closest('[data-acao="excluir"]');
 
   if (botaoExcluir) {
     abrirConfirmacaoExclusao(botaoExcluir.dataset.eventoId);
@@ -99,8 +80,6 @@ if (botaoNovoEvento) {
 }
 
 function mostrarTodosEventos() {
-  
-
   eventos.forEach((evento) => {
     mostrarEventoNoCalendario(evento);
   });
@@ -113,8 +92,6 @@ function tratarCliqueCalendario(eventoClique) {
     abrirDetalhesEvento(botaoEvento.dataset.eventoId);
     return;
   }
-
-
 
   const cardDia = eventoClique.target.closest(".card-dia");
 
@@ -181,10 +158,7 @@ function abrirFormularioNovoEvento(dia) {
   `;
 }
 function abrirDetalhesEvento(eventoId) {
-    
-  const eventoEncontrado = eventos.find(
-    (evento) => evento.id === eventoId,
-  );
+  const eventoEncontrado = eventos.find((evento) => evento.id === eventoId);
 
   if (!eventoEncontrado) {
     return;
@@ -208,22 +182,29 @@ function abrirDetalhesEvento(eventoId) {
         </button>
       </div>
 
-        <div class="campo-detalhe">
-        <strong>Local</strong>
-        <p>${eventoEncontrado.local || "Não informado"}</p>
-      </div>
+        <p class="detalhe-evento">
+  <span class="detalhe-icone">📍</span>
 
-      <div class="campo-detalhe">
-        <strong>Descrição</strong>
-        <p>${eventoEncontrado.descricao}</p>
-      </div>
+  <span>
+    ${eventoEncontrado.local || "Local não informado"}
+  </span>
+</p>
 
-      <div class="campo-detalhe">
-        <strong>Status</strong>
-        <p class="status-evento status-${eventoEncontrado.status}">
-          ${formatarStatus(eventoEncontrado.status)}
-        </p>
-      </div>
+<p class="detalhe-evento">
+  <span class="detalhe-icone">📝</span>
+
+  <span>
+    ${eventoEncontrado.descricao || "Sem descrição"}
+  </span>
+</p>
+
+<p class="detalhe-evento status-${eventoEncontrado.status}">
+  <span class="status-bolinha"></span>
+
+  <span>
+    ${formatarStatus(eventoEncontrado.status)}
+  </span>
+</p>
 
       <div class="acoes-evento">
         <button
@@ -251,13 +232,14 @@ function abrirDetalhesEvento(eventoId) {
 function abrirDetalhesDia(cardDia) {
   const data = cardDia.dataset.data;
 
-  const eventosDoDia = eventos.filter(
-    (evento) => evento.data === data,
-  );
+  const eventosDoDia = eventos.filter((evento) => evento.data === data);
 
   const climaDia =
     cardDia.querySelector(".clima-dia")?.innerHTML ??
     "<span>Clima indisponível</span>";
+
+  const classeClima =
+    cardDia.querySelector(".clima-dia")?.className ?? "clima-dia";
 
   const listaEventos =
     eventosDoDia.length > 0
@@ -277,10 +259,15 @@ function abrirDetalhesDia(cardDia) {
           .join("")
       : "<p class='sem-eventos'>Nenhum evento neste dia.</p>";
 
+  const dataFormatada = formatarData(data);
+  const timelineClima = criarTimelineClima(data);
   painelEvento.innerHTML = `
     <div class="detalhes-dia">
             <div class="cabecalho-painel">
-          <h2>${formatarData(data)}</h2>
+          <div class="data-painel">
+          <span>${dataFormatada.diaSemana}</span>
+          <h2>${dataFormatada.dataCompleta}</h2>
+        </div>
 
           <button
             id="botao-fechar-painel"
@@ -295,10 +282,15 @@ function abrirDetalhesDia(cardDia) {
       <section class="clima-painel">
         <h3>Previsão do tempo</h3>
 
-        <div class="conteudo-clima-painel">
-          ${climaDia}
-        </div>
-      </section>
+          <div class="conteudo-clima-painel">
+        ${climaDia}
+         </div>
+        </section>
+        <section class="timeline-painel">
+          <h3>Previsão por horário</h3>
+
+           ${timelineClima}
+          </section>
 
       <section class="eventos-painel">
         <h3>Eventos</h3>
@@ -319,17 +311,66 @@ function abrirDetalhesDia(cardDia) {
     </div>
   `;
 }
+function criarTimelineClima(data) {
+  const previsao = obterPrevisaoPorData(data);
+  console.log(previsao);
+  const horas = previsao?.horas ?? [];
+
+  if (horas.length === 0) {
+    return `
+      <p class="timeline-indisponivel">
+        Previsão por horário indisponível.
+      </p>
+    `;
+  }
+
+  return `
+    <div class="timeline-clima">
+      ${horas
+        .map(
+          (hora) => `
+        <div class="timeline-item">
+          <strong>${hora.horario}</strong>
+
+          <span class="timeline-temperatura">
+            ${hora.temperatura}°
+          </span>
+
+          <span class="timeline-chuva">
+            🌧 ${hora.chanceChuva}%
+          </span>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
 
 function formatarData(data) {
-  const [ano, mes, dia] = data.split("-");
+  const [ano, mes, dia] = data.split("-").map(Number);
 
-  return `${dia}/${mes}/${ano}`;
+  const dataLocal = new Date(ano, mes - 1, dia);
+
+  const diaSemana = dataLocal.toLocaleDateString("pt-BR", {
+    weekday: "long",
+  });
+
+  const dataCompleta = dataLocal.toLocaleDateString("pt-BR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return {
+    diaSemana: diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1),
+
+    dataCompleta: dataCompleta.charAt(0).toUpperCase() + dataCompleta.slice(1),
+  };
 }
 
 function abrirConfirmacaoExclusao(eventoId) {
-  const eventoEncontrado = eventos.find(
-    (evento) => evento.id === eventoId,
-  );
+  const eventoEncontrado = eventos.find((evento) => evento.id === eventoId);
 
   if (!eventoEncontrado) {
     return;
@@ -382,9 +423,7 @@ function abrirConfirmacaoExclusao(eventoId) {
 }
 
 function excluirEvento(eventoId) {
-  const indiceEvento = eventos.findIndex(
-    (evento) => evento.id === eventoId,
-  );
+  const indiceEvento = eventos.findIndex((evento) => evento.id === eventoId);
 
   if (indiceEvento === -1) {
     return;
@@ -402,9 +441,7 @@ function excluirEvento(eventoId) {
   fecharPainel();
 }
 function abrirFormularioEdicao(eventoId) {
-  const evento = eventos.find(
-    (item) => item.id === eventoId
-  );
+  const evento = eventos.find((item) => item.id === eventoId);
 
   if (!evento) {
     return;
@@ -413,21 +450,15 @@ function abrirFormularioEdicao(eventoId) {
   eventoEditando = evento.id;
   dataSelecionada = evento.data;
 
-  abrirFormularioNovoEvento(
-    Number(evento.data.slice(-2))
-  );
+  abrirFormularioNovoEvento(Number(evento.data.slice(-2)));
 
-  document.querySelector("#titulo-evento").value =
-    evento.titulo;
-  
-    document.querySelector("#local-evento").value =
-  evento.local ?? "";
+  document.querySelector("#titulo-evento").value = evento.titulo;
 
-  document.querySelector("#descricao-evento").value =
-    evento.descricao;
+  document.querySelector("#local-evento").value = evento.local ?? "";
 
-  document.querySelector("#status-evento").value =
-    evento.status;
+  document.querySelector("#descricao-evento").value = evento.descricao;
+
+  document.querySelector("#status-evento").value = evento.status;
 }
 
 function salvarEvento(eventoSubmit) {
@@ -474,9 +505,7 @@ function salvarEvento(eventoSubmit) {
 }
 
 function mostrarEventoNoCalendario(evento) {
-  const cardDia = calendario.querySelector(
-    `[data-data="${evento.data}"]`,
-  );
+  const cardDia = calendario.querySelector(`[data-data="${evento.data}"]`);
 
   if (!cardDia) {
     return;
@@ -486,10 +515,7 @@ function mostrarEventoNoCalendario(evento) {
 
   const botaoEvento = document.createElement("button");
 
-    botaoEvento.classList.add(
-    "resumo-evento",
-    `evento-${evento.status}`,
-    );
+  botaoEvento.classList.add("resumo-evento", `evento-${evento.status}`);
 
   botaoEvento.type = "button";
   botaoEvento.dataset.eventoId = evento.id;
@@ -510,8 +536,7 @@ function atualizarEventoNoCalendario(evento) {
     return;
   }
 
-  botaoEvento.className =
-    `resumo-evento evento-${evento.status}`;
+  botaoEvento.className = `resumo-evento evento-${evento.status}`;
 
   botaoEvento.innerHTML = `
   <strong>${evento.titulo}</strong>

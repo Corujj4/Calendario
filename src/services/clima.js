@@ -1,8 +1,12 @@
-import {
-  buscarPrevisao16Dias,
-} from "./climaService.js";
+import { buscarPrevisaoCombinada } from "./climaService.js";
 import { obterVisualClima } from "../utils/weatherUtils.js";
+let previsoesAtuais = [];
 
+export function obterPrevisaoPorData(data) {
+  return previsoesAtuais.find(
+    (previsao) => previsao.data === data,
+  );
+}
 const botaoAtualizarClima = document.querySelector(
   "#botao-atualizar-clima",
 );
@@ -31,10 +35,12 @@ async function atualizarClima() {
     const latitudeSantaMaria = -29.6842;
     const longitudeSantaMaria = -53.8069;
 
-    const previsoes = await buscarPrevisao16Dias(
+    const previsoes = await buscarPrevisaoCombinada(
     latitudeSantaMaria,
     longitudeSantaMaria,
     );
+
+    previsoesAtuais = previsoes;
 
 
     mostrarPrevisoesNoCalendario(previsoes);
@@ -81,6 +87,10 @@ function mostrarPrevisoesNoCalendario(previsoes) {
 
   <span class="chance-chuva">
     🌧 ${previsao.chanceChuva}%
+  </span>
+
+  <span class="fonte-clima">
+    Fonte: ${previsao.fonte}
   </span>
 `;
   });
