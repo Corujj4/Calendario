@@ -242,12 +242,35 @@ cardDia.classList.add("dia-selecionado");
 
   const eventosDoDia = eventos.filter((evento) => evento.data === data);
 
-  const climaDia =
-    cardDia.querySelector(".clima-dia")?.innerHTML ??
-    "<span>Clima indisponível</span>";
+  const previsao = obterPrevisaoPorData(data);
 
-  const classeClima =
-    cardDia.querySelector(".clima-dia")?.className ?? "clima-dia";
+const iconeClima =
+  cardDia.querySelector(".icone-clima")?.innerHTML ?? "☁️";
+
+const resumoClima = previsao
+  ? `
+      <div class="resumo-clima">
+        <div class="resumo-clima-icone">
+          ${iconeClima}
+        </div>
+
+        <div class="resumo-clima-dados">
+          <strong>
+            ${previsao.temperaturaMinima}° /
+            ${previsao.temperaturaMaxima}°
+          </strong>
+
+          <span>
+            🌧 ${previsao.chanceChuva}% de chuva
+          </span>
+        </div>
+      </div>
+    `
+  : `
+      <p class="clima-indisponivel-painel">
+        Clima indisponível
+      </p>
+    `;
 
   const listaEventos =
     eventosDoDia.length > 0
@@ -287,13 +310,9 @@ cardDia.classList.add("dia-selecionado");
           </button>
         </div>
 
-      <section class="clima-painel">
-        <h3>Previsão do tempo</h3>
-
-          <div class="conteudo-clima-painel">
-        ${climaDia}
-         </div>
-        </section>
+      <div class="resumo-clima-painel">
+  ${resumoClima}
+</div>
         
 
       <section class="eventos-painel">
@@ -310,12 +329,46 @@ cardDia.classList.add("dia-selecionado");
         data-acao="novo-evento"
         data-data="${data}"
       >
-        Novo evento
+       + Novo evento
       </button>
     </div>
   `;
 }
+function criarTimelineClima(data) {
+  const previsao = obterPrevisaoPorData(data);
+  console.log(previsao);
+  const horas = previsao?.horas ?? [];
 
+  if (horas.length === 0) {
+    return `
+      <p class="timeline-indisponivel">
+        Previsão por horário indisponível.
+      </p>
+    `;
+  }
+
+  return `
+    <div class="timeline-clima">
+      ${horas
+        .map(
+          (hora) => `
+        <div class="timeline-item">
+          <strong>${hora.horario}</strong>
+
+          <span class="timeline-temperatura">
+            ${hora.temperatura}°
+          </span>
+
+          <span class="timeline-chuva">
+            🌧 ${hora.chanceChuva}%
+          </span>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
 
 function formatarData(data) {
   const [ano, mes, dia] = data.split("-").map(Number);
@@ -326,11 +379,13 @@ function formatarData(data) {
     weekday: "long",
   });
 
-  const dataCompleta = dataLocal.toLocaleDateString("pt-BR", {
+  const dataCompleta = dataLocal.toLocaleDateString(
+  "pt-BR",
+  {
     day: "numeric",
     month: "long",
-    year: "numeric",
-  });
+  },
+);
 
   return {
     diaSemana: diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1),
