@@ -1,5 +1,7 @@
 import { obterPrevisaoPorData } from "../services/clima.js";
 import { carregarEventos, salvarEventos } from "../services/storageService.js";
+import { atualizarPainelPrevisao }
+from "../components/painelPrevisao.js";
 
 const painelEvento = document.querySelector("#painel-evento");
 const calendario = document.querySelector("#calendario");
@@ -230,7 +232,13 @@ function abrirDetalhesEvento(eventoId) {
 }
 
 function abrirDetalhesDia(cardDia) {
+  calendario
+  .querySelector(".dia-selecionado")
+  ?.classList.remove("dia-selecionado");
+
+cardDia.classList.add("dia-selecionado");
   const data = cardDia.dataset.data;
+  atualizarPainelPrevisao(data);
 
   const eventosDoDia = eventos.filter((evento) => evento.data === data);
 
@@ -260,7 +268,7 @@ function abrirDetalhesDia(cardDia) {
       : "<p class='sem-eventos'>Nenhum evento neste dia.</p>";
 
   const dataFormatada = formatarData(data);
-  const timelineClima = criarTimelineClima(data);
+ 
   painelEvento.innerHTML = `
     <div class="detalhes-dia">
             <div class="cabecalho-painel">
@@ -286,11 +294,7 @@ function abrirDetalhesDia(cardDia) {
         ${climaDia}
          </div>
         </section>
-        <section class="timeline-painel">
-          <h3>Previsão por horário</h3>
-
-           ${timelineClima}
-          </section>
+        
 
       <section class="eventos-painel">
         <h3>Eventos</h3>
@@ -311,41 +315,7 @@ function abrirDetalhesDia(cardDia) {
     </div>
   `;
 }
-function criarTimelineClima(data) {
-  const previsao = obterPrevisaoPorData(data);
-  console.log(previsao);
-  const horas = previsao?.horas ?? [];
 
-  if (horas.length === 0) {
-    return `
-      <p class="timeline-indisponivel">
-        Previsão por horário indisponível.
-      </p>
-    `;
-  }
-
-  return `
-    <div class="timeline-clima">
-      ${horas
-        .map(
-          (hora) => `
-        <div class="timeline-item">
-          <strong>${hora.horario}</strong>
-
-          <span class="timeline-temperatura">
-            ${hora.temperatura}°
-          </span>
-
-          <span class="timeline-chuva">
-            🌧 ${hora.chanceChuva}%
-          </span>
-        </div>
-      `,
-        )
-        .join("")}
-    </div>
-  `;
-}
 
 function formatarData(data) {
   const [ano, mes, dia] = data.split("-").map(Number);

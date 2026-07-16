@@ -44,12 +44,16 @@ export async function buscarPrevisaoCombinada(
       openMeteoPorData.get(previsaoWeather.data)?.horas ?? [];
 
     return {
-      ...previsaoMeteo,
-      ...previsaoWeather,
+  ...previsaoMeteo,
+  ...previsaoWeather,
 
-      horas: horasOpenMeteo,
+ 
+  codigoClima: previsaoMeteo.codigoClima,
 
-      fonte: "OpenWeather",
-    };
+  
+  horas: horasOpenMeteo,
+
+  fonte: "OpenWeather",
+};
   });
 }

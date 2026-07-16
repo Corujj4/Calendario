@@ -10,9 +10,7 @@ export async function buscarCoordenadas(cidade) {
   const resposta = await fetch(endereco);
 
   if (!resposta.ok) {
-    throw new Error(
-      `Erro ao buscar localização: ${resposta.status}`,
-    );
+    throw new Error(`Erro ao buscar localização: ${resposta.status}`);
   }
 
   const dados = await resposta.json();
@@ -31,10 +29,7 @@ export async function buscarCoordenadas(cidade) {
   };
 }
 
-export async function buscarPrevisao16Dias(
-  latitude,
-  longitude,
-) {
+export async function buscarPrevisao16Dias(latitude, longitude) {
   const variaveisDiarias = [
     "temperature_2m_max",
     "temperature_2m_min",
@@ -63,9 +58,7 @@ export async function buscarPrevisao16Dias(
   const resposta = await fetch(endereco);
 
   if (!resposta.ok) {
-    throw new Error(
-      `Erro ao buscar previsão: ${resposta.status}`,
-    );
+    throw new Error(`Erro ao buscar previsão: ${resposta.status}`);
   }
 
   const dados = await resposta.json();
@@ -73,37 +66,27 @@ export async function buscarPrevisao16Dias(
   const horasPorDia = agruparHorasPorDia(dados.hourly);
 
   return dados.daily.time.map((data, indice) => {
-
-    
     const horas = horasPorDia.get(data) ?? [];
 
     return {
-  data,
+      data,
 
-  codigoClima: classificarClimaDoDia(horas),
+      codigoClima: classificarClimaDoDia(horas),
 
-  temperaturaMaxima: Math.round(
-    dados.daily.temperature_2m_max[indice],
-  ),
+      temperaturaMaxima: Math.round(dados.daily.temperature_2m_max[indice]),
 
-  temperaturaMinima: Math.round(
-    dados.daily.temperature_2m_min[indice],
-  ),
+      temperaturaMinima: Math.round(dados.daily.temperature_2m_min[indice]),
 
-  chanceChuva:
-    dados.daily.precipitation_probability_max[indice] ?? 0,
+      chanceChuva: dados.daily.precipitation_probability_max[indice] ?? 0,
 
-  quantidadeChuva:
-    dados.daily.precipitation_sum[indice] ?? 0,
+      quantidadeChuva: dados.daily.precipitation_sum[indice] ?? 0,
 
-  horas: horas.filter((hora) => {
-    const horaNumerica = Number(
-      hora.horario.slice(0, 2),
-    );
+      horas: horas.filter((hora) => {
+        const horaNumerica = Number(hora.horario.slice(0, 2));
 
-    return horaNumerica >= 7 && horaNumerica <= 22;
-  }),
-};
+        return horaNumerica >= 7 && horaNumerica <= 22;
+      }),
+    };
   });
 }
 function agruparHorasPorDia(dadosHorarios) {
@@ -117,29 +100,32 @@ function agruparHorasPorDia(dadosHorarios) {
     }
 
     horasPorDia.get(data).push({
-  horario: dataHora.slice(11, 16),
+      horario: dataHora.slice(11, 16),
 
-  temperatura: Math.round(
-    dadosHorarios.temperature_2m[indice],
-  ),
+      temperatura: Math.round(dadosHorarios.temperature_2m[indice]),
 
-  chanceChuva:
-    dadosHorarios.precipitation_probability[indice] ?? 0,
+      chanceChuva: dadosHorarios.precipitation_probability[indice] ?? 0,
 
-  codigo: dadosHorarios.weather_code[indice],
+      codigo: dadosHorarios.weather_code[indice],
 
-  nuvens:
-    dadosHorarios.cloud_cover[indice] ?? 0,
+      nuvens: dadosHorarios.cloud_cover[indice] ?? 0,
 
-  precipitacao:
-    dadosHorarios.precipitation[indice] ?? 0,
-  });
+      precipitacao: dadosHorarios.precipitation[indice] ?? 0,
+    });
   });
 
   return horasPorDia;
 }
 
 function classificarClimaDoDia(horas) {
+  const horasDoDia = horas.filter((hora) => {
+    const horaNumerica = Number(
+      hora.horario.slice(0, 2),
+    );
+
+    return horaNumerica >= 7 && horaNumerica <= 19;
+  });
+
   const codigosTemporal = [95, 96, 99];
   const codigosChuvaForte = [65, 67, 82];
 
@@ -149,11 +135,11 @@ function classificarClimaDoDia(horas) {
     80, 81,
   ];
 
-  const temTemporal = horas.some((hora) =>
+  const temTemporal = horasDoDia.some((hora) =>
     codigosTemporal.includes(hora.codigo),
   );
 
-  const temChuvaForte = horas.some(
+  const temChuvaForte = horasDoDia.some(
     (hora) =>
       codigosChuvaForte.includes(hora.codigo) ||
       hora.precipitacao >= 10,
@@ -163,7 +149,7 @@ function classificarClimaDoDia(horas) {
     return "chuva-forte";
   }
 
-  const temChuva = horas.some(
+  const temChuva = horasDoDia.some(
     (hora) =>
       codigosChuva.includes(hora.codigo) ||
       hora.precipitacao > 0,
@@ -173,28 +159,31 @@ function classificarClimaDoDia(horas) {
     return "chuva";
   }
 
-  const horasComSol = horas.filter(
-    (hora) => hora.codigo === 0 || hora.codigo === 1,
+  const horasComSol = horasDoDia.filter(
+    (hora) =>
+      hora.codigo === 0 ||
+      hora.codigo === 1 ||
+      hora.codigo === 2 ||
+      hora.nuvens < 70,
   ).length;
 
-  if (horasComSol >= 12) {
+  if (horasComSol >= 8) {
     return "muito-sol";
   }
 
-  if (horasComSol >= 1) {
+  if (horasComSol >= 3) {
     return "sol";
   }
 
-  const horasNubladas = horas.filter(
+  const horasNubladas = horasDoDia.filter(
     (hora) =>
-      hora.codigo === 2 ||
       hora.codigo === 3 ||
       hora.nuvens >= 80,
   ).length;
 
-  if (horasNubladas >= 20) {
+  if (horasNubladas >= 10) {
     return "nublado";
   }
 
-  return "nublado";
+  return "sol";
 }

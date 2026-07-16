@@ -19,79 +19,87 @@
   <body>
     <div id="app">
       <header class="cabecalho-principal">
-        <div>
-          <h1>Calendário de Trilhas</h1>
-          <p>Organização interna da equipe</p>
-        </div>
+  <div class="marca-sistema">
+    <div class="marca-icone">🥾</div>
 
-        <button id="botao-atualizar-clima" class="botao-controle" type="button">
-          Atualizar clima
-        </button>
-      </header>
+    <div class="marca-linha">
+      <h1>Calendário de Trilhas</h1>
+      <span>Gestão de eventos e Clima</span>
+    </div>
+  </div>
 
-          <nav class="navegacao-calendario" aria-label="Navegação do calendário">
-      <h2 id="titulo-mes">Julho de 2026</h2>
+  <button
+    id="botao-atualizar-clima"
+    class="botao-controle botao-atualizar-clima"
+    type="button"
+  >
+    Atualizar clima
+  </button>
+</header>
 
-      <div class="controles-mes">
+          
+
+<section
+  id="painel-previsao-dia"
+  class="painel-previsao-dia"
+>
+</section>
+
+      <main class="conteudo-principal">
+  <section class="area-calendario">
+    <div class="cabecalho-calendario">
+      <div class="controle-mes-principal">
         <button
           id="botao-mes-anterior"
-          class="botao-controle"
+          class="botao-navegacao"
           type="button"
+          aria-label="Mês anterior"
         >
-          Mês anterior
+          ←
         </button>
 
-        <button
-          id="botao-hoje"
-          class="botao-controle"
-          type="button"
-        >
-          Hoje
-        </button>
+        <h2 id="titulo-mes">Julho de 2026</h2>
 
         <button
           id="botao-proximo-mes"
-          class="botao-controle"
+          class="botao-navegacao"
           type="button"
+          aria-label="Próximo mês"
         >
-          Próximo mês
+          →
         </button>
       </div>
-    </nav>
 
-      <main class="conteudo-principal">
-        <section class="area-calendario">
-          <div class="dias-semana" aria-hidden="true">
-            <span>Dom</span>
-            <span>Seg</span>
-            <span>Ter</span>
-            <span>Qua</span>
-            <span>Qui</span>
-            <span>Sex</span>
-            <span>Sáb</span>
-          
-          </div>
+      <button
+        id="botao-hoje"
+        class="botao-controle"
+        type="button"
+      >
+        Hoje
+      </button>
+    </div>
 
-          <section
-            id="calendario"
-            class="calendario"
-            aria-label="Calendário mensal de trilhas"
-          >
-           
-          </section>
-          </section>
+    <div class="dias-semana" aria-hidden="true">
+      <span>Dom</span>
+      <span>Seg</span>
+      <span>Ter</span>
+      <span>Qua</span>
+      <span>Qui</span>
+      <span>Sex</span>
+      <span>Sáb</span>
+    </div>
 
-        <aside id="painel-evento" class="painel-evento">
-          <div class="painel-vazio">
-            <h2>Detalhes</h2>  
-              Nenhum evento selecionado.
+    <section
+      id="calendario"
+      class="calendario"
+      aria-label="Calendário mensal de trilhas"
+    ></section>
+  </section>
 
-            <p>
-              Clique em um evento ou no botão de adicionar de um dia.
-            </p>
-          </div>
-        </aside>
-      </main>
+  <aside id="painel-evento" class="painel-evento">
+    ...
+  </aside>
+</main>
 
       <footer class="rodape">
         <p id="ultima-atualizacao-clima">
