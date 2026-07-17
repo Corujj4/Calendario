@@ -47,10 +47,11 @@ export async function buscarPrevisaoCombinada(
   ...previsaoMeteo,
   ...previsaoWeather,
 
- 
+  // Clima e chuva precisam vir da mesma API
   codigoClima: previsaoMeteo.codigoClima,
+  chanceChuva: previsaoMeteo.chanceChuva,
+  quantidadeChuva: previsaoMeteo.quantidadeChuva,
 
-  
   horas: horasOpenMeteo,
 
   fonte: "OpenWeather",

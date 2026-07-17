@@ -125,6 +125,9 @@ function classificarClimaDoDia(horas) {
 
     return horaNumerica >= 7 && horaNumerica <= 19;
   });
+  const maiorChanceChuva = Math.max(
+  ...horasDoDia.map((hora) => hora.chanceChuva ?? 0),
+);
 
   const codigosTemporal = [95, 96, 99];
   const codigosChuvaForte = [65, 67, 82];
@@ -135,11 +138,15 @@ function classificarClimaDoDia(horas) {
     80, 81,
   ];
 
-  const temTemporal = horasDoDia.some((hora) =>
+const temTemporal =
+  maiorChanceChuva >= 30 &&
+  horasDoDia.some((hora) =>
     codigosTemporal.includes(hora.codigo),
   );
 
-  const temChuvaForte = horasDoDia.some(
+const temChuvaForte =
+  maiorChanceChuva >= 40 &&
+  horasDoDia.some(
     (hora) =>
       codigosChuvaForte.includes(hora.codigo) ||
       hora.precipitacao >= 10,
@@ -149,7 +156,9 @@ function classificarClimaDoDia(horas) {
     return "chuva-forte";
   }
 
-  const temChuva = horasDoDia.some(
+ const temChuva =
+  maiorChanceChuva >= 20 &&
+  horasDoDia.some(
     (hora) =>
       codigosChuva.includes(hora.codigo) ||
       hora.precipitacao > 0,

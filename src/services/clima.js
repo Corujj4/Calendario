@@ -89,9 +89,7 @@ function mostrarPrevisoesNoCalendario(previsoes) {
     🌧 ${previsao.chanceChuva}%
   </span>
 
-  <span class="fonte-clima">
-    Fonte: ${previsao.fonte}
-  </span>
+ 
 `;
   });
 }

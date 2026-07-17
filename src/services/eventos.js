@@ -12,11 +12,35 @@ let dataSelecionada = null;
 let eventoEditando = null;
 
 export function configurarEventos() {
+  painelEvento.addEventListener("input", formatarCampoHorario);
   document.addEventListener("calendarioRenderizado", mostrarTodosEventos);
   calendario.addEventListener("click", tratarCliqueCalendario);
 
   painelEvento.addEventListener("click", tratarCliquePainel);
   painelEvento.addEventListener("submit", salvarEvento);
+}
+function formatarCampoHorario(eventoInput) {
+  const campo = eventoInput.target;
+
+  const campoHorario =
+    campo.name === "horarioInicio" ||
+    campo.name === "horarioFim";
+
+  if (!campoHorario) {
+    return;
+  }
+
+  const numeros = campo.value
+    .replace(/\D/g, "")
+    .slice(0, 4);
+
+  if (numeros.length <= 2) {
+    campo.value = numeros;
+    return;
+  }
+
+  campo.value =
+    `${numeros.slice(0, 2)}:${numeros.slice(2)}`;
 }
 
 function salvarEventosNoNavegador() {
@@ -135,6 +159,69 @@ function abrirFormularioNovoEvento(dia) {
         type="text"
         placeholder="Ex.: Morro do Elefante"
       />
+      <div class="grupo-campos-evento">
+      <div>
+  <label for="numero-trilha">Número da trilha</label>
+
+  <div class="campo-ordinal">
+    <input
+      id="numero-trilha"
+      name="numeroTrilha"
+      type="number"
+      min="1"
+      step="1"
+      placeholder="Ex.: 12"
+    />
+
+    <span>º</span>
+  </div>
+</div>
+
+  <div>
+    <label for="quilometragem-evento">Quilometragem</label>
+
+    <input
+      id="quilometragem-evento"
+      name="quilometragem"
+      type="number"
+      min="0"
+      step="0.1"
+      placeholder="Ex.: 8.5"
+    />
+  </div>
+</div>
+
+<div class="grupo-campos-evento">
+  <div>
+    <label for="horario-inicio">Início</label>
+
+    <input
+  id="horario-inicio"
+  name="horarioInicio"
+  type="text"
+  inputmode="numeric"
+  maxlength="5"
+  placeholder="00:00"
+  pattern="(?:[01][0-9]|2[0-3]):[0-5][0-9]"
+  title="Digite um horário válido, por exemplo 07:30"
+/>
+  </div>
+
+  <div>
+    <label for="horario-fim">Término</label>
+
+   <input
+  id="horario-fim"
+  name="horarioFim"
+  type="text"
+  inputmode="numeric"
+  maxlength="5"
+  placeholder="00:00"
+  pattern="(?:[01][0-9]|2[0-3]):[0-5][0-9]"
+  title="Digite um horário válido, por exemplo 18:30"
+/>
+  </div>
+</div>
 
       <label for="descricao-evento">Descrição</label>
       <textarea
@@ -481,6 +568,17 @@ function abrirFormularioEdicao(eventoId) {
 
   document.querySelector("#local-evento").value = evento.local ?? "";
 
+  document.querySelector("#numero-trilha").value =
+  evento.numeroTrilha ?? "";
+
+  document.querySelector("#quilometragem-evento").value =
+  evento.quilometragem ?? "";
+
+  document.querySelector("#horario-inicio").value =
+  evento.horarioInicio ?? "";
+
+  document.querySelector("#horario-fim").value =
+  evento.horarioFim ?? "";    
   document.querySelector("#descricao-evento").value = evento.descricao;
 
   document.querySelector("#status-evento").value = evento.status;
@@ -502,6 +600,17 @@ function salvarEvento(eventoSubmit) {
 
     eventoExistente.titulo = formulario.titulo.value.trim();
     eventoExistente.local = formulario.local.value.trim();
+    eventoExistente.numeroTrilha =
+    formulario.numeroTrilha.value.trim();
+
+    eventoExistente.quilometragem =
+    formulario.quilometragem.value.trim();
+
+    eventoExistente.horarioInicio =
+    formulario.horarioInicio.value;
+
+    eventoExistente.horarioFim =
+    formulario.horarioFim.value;
     eventoExistente.descricao = formulario.descricao.value.trim();
     eventoExistente.status = formulario.status.value;
     salvarEventosNoNavegador();
@@ -520,6 +629,10 @@ function salvarEvento(eventoSubmit) {
     descricao: formulario.descricao.value.trim(),
     status: formulario.status.value,
     local: formulario.local.value.trim(),
+    numeroTrilha: formulario.numeroTrilha.value.trim(),
+    quilometragem: formulario.quilometragem.value.trim(),
+    horarioInicio: formulario.horarioInicio.value,
+    horarioFim: formulario.horarioFim.value,
   };
 
   eventos.push(novoEvento);

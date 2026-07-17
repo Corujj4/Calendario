@@ -566,7 +566,7 @@ button {
 .formulario-evento {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 19px;
 }
 
 .cabecalho-painel {
@@ -692,6 +692,11 @@ button {
   color: #62a9ff;
   border-left-color: #3b82f6;
 }
+.clima-temporal {
+  color: #a855f7;
+}
+
+
 .clima-painel,
 .eventos-painel {
   display: flex;
@@ -1083,4 +1088,72 @@ button {
 .detalhes-dia > .botao-destaque {
   width: 100%;
   margin-top: 4px;
+}
+.campo-ordinal {
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+}
+
+.campo-ordinal:focus-within {
+  border-color: var(--cor-principal);
+}
+
+.formulario-evento .campo-ordinal input {
+  flex: 1;
+  min-width: 0;
+
+  border: none;
+  border-radius: 0;
+}
+
+.campo-ordinal {
+  display: flex;
+  align-items: center;
+
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+
+  overflow: hidden;
+}
+
+.campo-ordinal input {
+  flex: 1;
+
+  border: none !important;
+  background: transparent;
+}
+
+.campo-ordinal span {
+  width: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-left: 1px solid var(--cor-borda);
+
+  color: var(--cor-texto-secundario);
+
+  font-size: 18px;
+  font-weight: 700;
+}
+.grupo-campos-evento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  margin-top: 6px;
+}
+
+.grupo-campos-evento > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
