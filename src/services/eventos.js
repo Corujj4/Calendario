@@ -58,9 +58,20 @@ function tratarCliquePainel(eventoClique) {
   }
 
   if (botaoFechar) {
-    fecharPainel();
-    return;
+  if (dataSelecionada) {
+    const cardDia = calendario.querySelector(
+      `[data-data="${dataSelecionada}"]`,
+    );
+
+    if (cardDia) {
+      abrirDetalhesDia(cardDia);
+      return;
+    }
   }
+
+  fecharPainel();
+  return;
+}
 
   const botaoEditar = eventoClique.target.closest('[data-acao="editar"]');
 
@@ -258,7 +269,7 @@ function abrirDetalhesEvento(eventoId) {
       <div class="cabecalho-painel">
         <div>
           <h2>${eventoEncontrado.titulo}</h2>
-          <p>${eventoEncontrado.data}</p>
+          <p>${formatarData(eventoEncontrado.data).dataCompleta}</p>
         </div>
 
         <button
@@ -271,29 +282,78 @@ function abrirDetalhesEvento(eventoId) {
         </button>
       </div>
 
-        <p class="detalhe-evento">
-  <span class="detalhe-icone">📍</span>
+        <div class="grade-detalhes-evento">
+  <div class="detalhe-evento destaque-trilha">
+    <span class="detalhe-icone">🥾</span>
 
-  <span>
-    ${eventoEncontrado.local || "Local não informado"}
-  </span>
-</p>
+    <div>
+      <small>Trilha</small>
+      <strong>
+        ${eventoEncontrado.numeroTrilha
+          ? `${eventoEncontrado.numeroTrilha}º`
+          : "Número não informado"}
+      </strong>
+    </div>
+  </div>
 
-<p class="detalhe-evento">
-  <span class="detalhe-icone">📝</span>
+  <div class="detalhe-evento">
+    <span class="detalhe-icone">📍</span>
 
-  <span>
+    <div>
+      <small>Local</small>
+      <strong>
+        ${eventoEncontrado.local || "Não informado"}
+      </strong>
+    </div>
+  </div>
+
+  <div class="detalhe-evento">
+    <span class="detalhe-icone">📏</span>
+
+    <div>
+      <small>Distância</small>
+      <strong>
+        ${eventoEncontrado.quilometragem
+          ? `${eventoEncontrado.quilometragem} km`
+          : "Não informada"}
+      </strong>
+    </div>
+  </div>
+
+  <div class="detalhe-evento">
+    <span class="detalhe-icone">🕒</span>
+
+    <div>
+      <small>Horário</small>
+      <strong>
+        ${
+          eventoEncontrado.horarioInicio &&
+          eventoEncontrado.horarioFim
+            ? `${eventoEncontrado.horarioInicio} Ás ${eventoEncontrado.horarioFim}`
+            : eventoEncontrado.horarioInicio ||
+              eventoEncontrado.horarioFim ||
+              "Não informado"
+        }
+      </strong>
+    </div>
+  </div>
+</div>
+
+<div class="descricao-detalhe-evento">
+  <small>Descrição</small>
+
+  <p>
     ${eventoEncontrado.descricao || "Sem descrição"}
-  </span>
-</p>
+  </p>
+</div>
 
-<p class="detalhe-evento status-${eventoEncontrado.status}">
+<div class="detalhe-evento status-${eventoEncontrado.status}">
   <span class="status-bolinha"></span>
 
-  <span>
+  <strong>
     ${formatarStatus(eventoEncontrado.status)}
-  </span>
-</p>
+  </strong>
+</div>
 
       <div class="acoes-evento">
         <button
@@ -325,7 +385,16 @@ function abrirDetalhesDia(cardDia) {
 
 cardDia.classList.add("dia-selecionado");
   const data = cardDia.dataset.data;
+  dataSelecionada = data;
   atualizarPainelPrevisao(data);
+  requestAnimationFrame(() => {
+  document
+    .querySelector("#painel-previsao-dia")
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+});
 
   const eventosDoDia = eventos.filter((evento) => evento.data === data);
 
@@ -387,37 +456,31 @@ const resumoClima = previsao
           <h2>${dataFormatada.dataCompleta}</h2>
         </div>
 
-          <button
-            id="botao-fechar-painel"
-            class="botao-fechar-painel"
-            type="button"
-            aria-label="Fechar painel"
-          >
-            ×
-          </button>
+        
         </div>
 
       <div class="resumo-clima-painel">
   ${resumoClima}
 </div>
-        
 
-      <section class="eventos-painel">
-        <h3>Eventos</h3>
+<button
+  class="botao-controle botao-destaque"
+  type="button"
+  data-acao="novo-evento"
+  data-data="${data}"
+>
+  + Novo evento
+</button>
 
-        <div class="lista-eventos-painel">
-          ${listaEventos}
-        </div>
-      </section>
+<section class="eventos-painel">
 
-      <button
-        class="botao-controle botao-destaque"
-        type="button"
-        data-acao="novo-evento"
-        data-data="${data}"
-      >
-       + Novo evento
-      </button>
+  <h3>Eventos</h3>
+
+  <div class="lista-eventos-painel">
+    ${listaEventos}
+  </div>
+
+</section>
     </div>
   `;
 }
@@ -693,7 +756,7 @@ function formatarStatus(status) {
 }
 
 function fecharPainel() {
-  dataSelecionada = null;
+
   eventoEditando = null;
 
   painelEvento.innerHTML = `
