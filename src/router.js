@@ -1,7 +1,7 @@
-import { renderHome } from "./pages/home.js";
+import { renderHome } from "./pages/homePage.js";
 import { renderCalendario } from "./pages/calendarioPage.js";
-import { renderTrilhas } from "./pages/trilhas.js";
-import { renderGaleria } from "./pages/galeria.js";
+import { renderTrilhas } from "./pages/trilhasPage.js";
+import { renderGaleria } from "./pages/galeriaPage.js";
 import { criarCalendario } from "./components/calendario/calendario.js";
 import { configurarClima } from "./services/clima.js";
 import { configurarEventos } from "./services/eventos.js";
