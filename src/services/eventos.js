@@ -1,10 +1,13 @@
 import { obterPrevisaoPorData } from "../services/clima.js";
 import { carregarEventos, salvarEventos } from "../services/storageService.js";
 import { atualizarPainelPrevisao }
-from "../components/painelPrevisao.js";
+from "../components/calendario/painelPrevisao.js";
 
-const painelEvento = document.querySelector("#painel-evento");
-const calendario = document.querySelector("#calendario");
+let painelEvento = null;
+let calendario = null;
+let painelConfigurado = null;
+let calendarioConfigurado = null;
+let eventoCalendarioConfigurado = false;
 
 const eventos = carregarEventos();
 
@@ -12,12 +15,30 @@ let dataSelecionada = null;
 let eventoEditando = null;
 
 export function configurarEventos() {
-  painelEvento.addEventListener("input", formatarCampoHorario);
-  document.addEventListener("calendarioRenderizado", mostrarTodosEventos);
-  calendario.addEventListener("click", tratarCliqueCalendario);
+  painelEvento = document.querySelector("#painel-evento");
+  calendario = document.querySelector("#calendario");
 
-  painelEvento.addEventListener("click", tratarCliquePainel);
-  painelEvento.addEventListener("submit", salvarEvento);
+  if (!painelEvento || !calendario) {
+    console.error("Elementos dos eventos não encontrados.");
+    return;
+  }
+
+  if (painelConfigurado !== painelEvento) {
+    painelEvento.addEventListener("input", formatarCampoHorario);
+    painelEvento.addEventListener("click", tratarCliquePainel);
+    painelEvento.addEventListener("submit", salvarEvento);
+    painelConfigurado = painelEvento;
+  }
+
+  if (calendarioConfigurado !== calendario) {
+    calendario.addEventListener("click", tratarCliqueCalendario);
+    calendarioConfigurado = calendario;
+  }
+
+  if (!eventoCalendarioConfigurado) {
+    document.addEventListener("calendarioRenderizado", mostrarTodosEventos);
+    eventoCalendarioConfigurado = true;
+  }
 }
 function formatarCampoHorario(eventoInput) {
   const campo = eventoInput.target;

@@ -1,0 +1,1131 @@
+/* ==========================
+   BASE E VARIÁVEIS
+========================== */
+
+.pagina-calendario {
+  --cal-cor-fundo: #262827;
+  --cal-cor-card: #2b2b2b;
+  --cal-cor-card-hover: #383c3a;
+  --cal-cor-painel: #232625;
+  --cal-cor-borda: #444444;
+  --cal-cor-borda-clara: #555555;
+  --cal-cor-principal: #ff7a00;
+  --cal-cor-principal-hover: #ff922e;
+  --cal-cor-texto: #f5f5f5;
+  --cal-cor-texto-secundario: #b8b8b8;
+  --cal-cor-texto-suave: #8f8f8f;
+  --cal-cor-botao: #363a38;
+  --cal-cor-botao-hover: #404442;
+  --cal-raio-pequeno: 7px;
+  --cal-raio-card: 10px;
+  --cal-transicao-padrao: 0.2s ease;
+
+  width: min(95%, 1700px);
+  margin: 0 auto;
+  padding: 20px;
+  color: var(--cal-cor-texto);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagina-calendario button {
+  cursor: pointer;
+}
+
+/* ==========================
+   CABEÇALHO PRINCIPAL
+========================== */
+
+.pagina-calendario .cabecalho-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+  padding: 18px 26px;
+  background: #232625;
+  border: 1px solid #383d39;
+  border-radius: 14px;
+}
+
+.pagina-calendario .marca-sistema {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.pagina-calendario .marca-icone {
+  flex-shrink: 0;
+  color: var(--cal-cor-principal);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.pagina-calendario .marca-linha {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+}
+
+.pagina-calendario .marca-linha h1 {
+  margin: 0;
+  color: var(--cal-cor-texto);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.pagina-calendario .marca-linha span {
+  color: var(--cal-cor-texto-suave);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ==========================
+   BOTÕES E CONTROLES
+========================== */
+
+.pagina-calendario .botao-controle {
+  padding: 9px 14px;
+  border: 1px solid var(--cal-cor-borda-clara);
+  border-radius: var(--cal-raio-pequeno);
+  background: var(--cal-cor-botao);
+  color: var(--cal-cor-texto);
+  transition:
+    background var(--cal-transicao-padrao),
+    border-color var(--cal-transicao-padrao),
+    transform var(--cal-transicao-padrao);
+}
+
+.pagina-calendario .botao-controle:hover {
+  border-color: var(--cal-cor-principal);
+  background: var(--cal-cor-botao-hover);
+  transform: translateY(-1px);
+}
+
+.pagina-calendario .botao-controle:active {
+  transform: translateY(0);
+}
+
+.pagina-calendario .botao-atualizar-clima,
+.pagina-calendario .botao-controle.botao-atualizar-clima {
+  flex-shrink: 0;
+  padding: 11px 18px;
+  border-color: #c9952d;
+  background: #c9952d;
+  color: #000;
+  font-weight: 700;
+  box-shadow: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pagina-calendario .botao-atualizar-clima:hover,
+.pagina-calendario .botao-controle.botao-atualizar-clima:hover {
+  border-color: #c9952d;
+  background: #c9952d;
+  color: #020101;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.18);
+}
+
+.pagina-calendario .botao-atualizar-clima:active,
+.pagina-calendario .botao-controle.botao-atualizar-clima:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.pagina-calendario .botao-navegacao {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #3b413d;
+  border-radius: 8px;
+  background: #292d2a;
+  color: var(--cal-cor-texto);
+  font-size: 18px;
+  transition:
+    border-color var(--cal-transicao-padrao),
+    color var(--cal-transicao-padrao),
+    background var(--cal-transicao-padrao);
+}
+
+.pagina-calendario .botao-navegacao:hover {
+  border-color: var(--cal-cor-principal);
+  background: #303531;
+  color: var(--cal-cor-principal);
+}
+
+.pagina-calendario .botao-destaque {
+  margin: 18px 0;
+  border-color: var(--cal-cor-principal);
+  background: var(--cal-cor-principal);
+  color: #181818;
+  font-weight: bold;
+}
+
+.pagina-calendario .botao-destaque:hover {
+  background: var(--cal-cor-principal-hover);
+  color: #181818;
+}
+
+.pagina-calendario .botao-excluir {
+  border-color: #ef4444;
+  background: #ef4444;
+  color: #fff;
+}
+
+.pagina-calendario .botao-excluir:hover {
+  border-color: #ff6666;
+  background: #ff6666;
+}
+
+/* ==========================
+   LAYOUT PRINCIPAL
+========================== */
+
+.pagina-calendario .conteudo-principal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 18px;
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.pagina-calendario .area-calendario {
+  min-width: 0;
+  padding: 20px;
+  background: #232625;
+  border: 1px solid #383d39;
+  border-radius: 14px;
+}
+
+/* ==========================
+   NAVEGAÇÃO DO CALENDÁRIO
+========================== */
+
+.pagina-calendario .cabecalho-calendario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pagina-calendario .controle-mes-principal {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pagina-calendario .controle-mes-principal h2 {
+  min-width: 180px;
+  margin: 0;
+  color: var(--cal-cor-texto);
+  font-size: 18px;
+  text-align: center;
+}
+
+.pagina-calendario .dias-semana,
+.pagina-calendario .calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.pagina-calendario .dias-semana {
+  margin-bottom: 10px;
+}
+
+.pagina-calendario .dias-semana span {
+  padding: 10px 0;
+  color: var(--cal-cor-principal);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pagina-calendario .calendario {
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* ==========================
+   CARDS DOS DIAS
+========================== */
+
+.pagina-calendario .card-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 112px;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-card);
+  background: var(--cal-cor-card);
+  color: var(--cal-cor-texto);
+  transition:
+    transform var(--cal-transicao-padrao),
+    background var(--cal-transicao-padrao),
+    box-shadow var(--cal-transicao-padrao);
+}
+
+.pagina-calendario .card-dia:hover {
+  border-color: #686868;
+  background: var(--cal-cor-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.pagina-calendario .dia-vazio {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.pagina-calendario .cabecalho-dia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pagina-calendario .numero-dia {
+  color: var(--cal-cor-texto);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pagina-calendario .dia-atual {
+  border: 2px solid #43c463;
+  background: rgba(67, 196, 99, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(67, 196, 99, 0.18),
+    0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.pagina-calendario .dia-atual .numero-dia {
+  color: #66df8a;
+  font-weight: 700;
+}
+
+.pagina-calendario .card-dia.dia-selecionado {
+  border: 2px solid var(--cal-cor-principal);
+  background: rgba(255, 122, 0, 0.08);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(255, 122, 0, 0.2),
+    0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+.pagina-calendario .card-dia.dia-selecionado .numero-dia {
+  color: var(--cal-cor-principal);
+  font-weight: 700;
+}
+
+/* ==========================
+   CLIMA NOS CARDS
+========================== */
+
+.pagina-calendario .clima-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+  padding-left: 8px;
+  border-left: 3px solid transparent;
+}
+
+.pagina-calendario .linha-clima {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagina-calendario .linha-clima strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.pagina-calendario .chance-chuva {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pagina-calendario .icone-clima {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.pagina-calendario .icone-clima svg,
+.pagina-calendario .resumo-clima-icone svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pagina-calendario .clima-sol {
+  color: #ffc247;
+  border-left-color: #ffc247;
+}
+
+.pagina-calendario .clima-nublado {
+  color: #aeb8c4;
+  border-left-color: #778493;
+}
+
+.pagina-calendario .clima-chuva {
+  color: #62a9ff;
+  border-left-color: #3b82f6;
+}
+
+.pagina-calendario .clima-chuva-forte {
+  color: #4f8cff;
+  border-left-color: #245ac4;
+}
+
+.pagina-calendario .clima-muito-sol {
+  color: #ffd43b;
+  border-left-color: #ff9f1c;
+}
+
+.pagina-calendario .clima-temporal {
+  color: #b86cff;
+  border-left-color: #a855f7;
+}
+
+.pagina-calendario .clima-sol .icone-clima,
+.pagina-calendario .clima-sol strong,
+.pagina-calendario .clima-sol .chance-chuva,
+.pagina-calendario .clima-nublado .icone-clima,
+.pagina-calendario .clima-nublado strong,
+.pagina-calendario .clima-nublado .chance-chuva,
+.pagina-calendario .clima-chuva .icone-clima,
+.pagina-calendario .clima-chuva strong,
+.pagina-calendario .clima-chuva .chance-chuva,
+.pagina-calendario .clima-chuva-forte .icone-clima,
+.pagina-calendario .clima-chuva-forte strong,
+.pagina-calendario .clima-chuva-forte .chance-chuva,
+.pagina-calendario .clima-muito-sol .icone-clima,
+.pagina-calendario .clima-muito-sol strong,
+.pagina-calendario .clima-muito-sol .chance-chuva,
+.pagina-calendario .clima-temporal .icone-clima,
+.pagina-calendario .clima-temporal strong,
+.pagina-calendario .clima-temporal .chance-chuva {
+  color: inherit;
+}
+
+.pagina-calendario .fonte-clima {
+  color: var(--cal-cor-texto-suave);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* ==========================
+   EVENTOS NOS CARDS
+========================== */
+
+.pagina-calendario .eventos-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.pagina-calendario .resumo-evento {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-left: 4px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cal-cor-texto);
+  text-align: left;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.pagina-calendario .resumo-evento::before {
+  content: "";
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.pagina-calendario .resumo-evento strong {
+  overflow: hidden;
+  color: var(--cal-cor-texto);
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pagina-calendario .resumo-evento span {
+  display: none;
+}
+
+.pagina-calendario .resumo-evento:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(3px);
+}
+
+.pagina-calendario .evento-lancado {
+  border-left-color: #3b82f6;
+}
+
+.pagina-calendario .evento-lancado::before {
+  background: #3b82f6;
+}
+
+.pagina-calendario .evento-confirmado {
+  border-left-color: #43c463;
+}
+
+.pagina-calendario .evento-confirmado::before {
+  background: #43c463;
+}
+
+.pagina-calendario .evento-cancelado {
+  border-left-color: #ef4444;
+}
+
+.pagina-calendario .evento-cancelado::before {
+  background: #ef4444;
+}
+
+/* ==========================
+   PAINEL LATERAL
+========================== */
+
+.pagina-calendario .painel-evento {
+  width: 100%;
+  min-width: 0;
+  min-height: 420px;
+  padding: 20px;
+  flex-shrink: 0;
+  background: var(--cal-cor-painel);
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-card);
+}
+
+.pagina-calendario .painel-vazio {
+  color: var(--cal-cor-texto-secundario);
+  text-align: center;
+}
+
+.pagina-calendario .painel-vazio h2 {
+  margin-bottom: 10px;
+  color: var(--cal-cor-texto);
+}
+
+.pagina-calendario .cabecalho-painel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.pagina-calendario .cabecalho-painel h2 {
+  color: var(--cal-cor-principal);
+}
+
+.pagina-calendario .cabecalho-painel p {
+  margin-top: 4px;
+  color: var(--cal-cor-texto-secundario);
+}
+
+.pagina-calendario .botao-fechar-painel {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: 50%;
+  background: var(--cal-cor-botao);
+  color: var(--cal-cor-texto);
+  font-size: 22px;
+  line-height: 1;
+  transition:
+    background var(--cal-transicao-padrao),
+    border-color var(--cal-transicao-padrao);
+}
+
+.pagina-calendario .botao-fechar-painel:hover {
+  border-color: var(--cal-cor-principal);
+  background: var(--cal-cor-botao-hover);
+}
+
+.pagina-calendario .data-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pagina-calendario .data-painel span {
+  color: var(--cal-cor-principal);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.pagina-calendario .data-painel h2 {
+  color: var(--cal-cor-texto);
+  font-size: 20px;
+}
+
+.pagina-calendario .clima-painel,
+.pagina-calendario .eventos-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--cal-cor-borda);
+}
+
+.pagina-calendario .clima-painel h3 {
+  color: var(--cal-cor-texto-secundario);
+  font-size: 14px;
+}
+
+.pagina-calendario .eventos-painel h3 {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: var(--cal-cor-texto);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.pagina-calendario .conteudo-clima-painel {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-pequeno);
+}
+
+.pagina-calendario .conteudo-clima-painel .clima-dia {
+  margin: 0;
+  padding: 0;
+  border-left: none;
+}
+
+.pagina-calendario .conteudo-clima-painel .icone-clima {
+  width: 34px;
+  height: 34px;
+}
+
+.pagina-calendario .conteudo-clima-painel .linha-clima strong {
+  font-size: 18px;
+}
+
+.pagina-calendario .conteudo-clima-painel .chance-chuva {
+  font-size: 15px;
+}
+
+.pagina-calendario .conteudo-clima-painel .fonte-clima {
+  margin-top: 4px;
+}
+
+.pagina-calendario .resumo-clima-painel {
+  margin-bottom: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--cal-cor-borda);
+}
+
+.pagina-calendario .resumo-clima-painel .linha-clima {
+  gap: 7px;
+}
+
+.pagina-calendario .resumo-clima-painel .icone-clima {
+  width: 25px;
+  height: 25px;
+}
+
+.pagina-calendario .resumo-clima-painel .linha-clima strong {
+  font-size: 16px;
+}
+
+.pagina-calendario .resumo-clima-painel .chance-chuva {
+  color: var(--cal-cor-texto-secundario);
+  font-size: 13px;
+}
+
+.pagina-calendario .resumo-clima-painel .chance-chuva::after {
+  content: " chuva";
+}
+
+.pagina-calendario .resumo-clima-painel .fonte-clima {
+  display: none;
+}
+
+.pagina-calendario .resumo-clima {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagina-calendario .resumo-clima-icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.pagina-calendario .resumo-clima-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pagina-calendario .resumo-clima-dados strong {
+  color: var(--cal-cor-texto);
+  font-size: 18px;
+}
+
+.pagina-calendario .resumo-clima-dados span {
+  color: var(--cal-cor-texto-secundario);
+  font-size: 12px;
+}
+
+.pagina-calendario .clima-indisponivel-painel,
+.pagina-calendario .sem-eventos {
+  color: var(--cal-cor-texto-suave);
+  font-size: 13px;
+}
+
+.pagina-calendario .lista-eventos-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 0;
+}
+
+.pagina-calendario .evento-painel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
+  border: none;
+  border-left: 4px solid transparent;
+  border-radius: var(--cal-raio-pequeno);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cal-cor-texto);
+  text-align: left;
+}
+
+.pagina-calendario .evento-painel span {
+  color: var(--cal-cor-texto-secundario);
+  font-size: 12px;
+}
+
+.pagina-calendario .detalhes-dia > .botao-destaque {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* ==========================
+   FORMULÁRIO DE EVENTO
+========================== */
+
+.pagina-calendario .formulario-evento,
+.pagina-calendario .detalhes-evento,
+.pagina-calendario .confirmacao-exclusao {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pagina-calendario .formulario-evento {
+  gap: 19px;
+}
+
+.pagina-calendario .formulario-evento label {
+  margin-top: 5px;
+  color: var(--cal-cor-texto-secundario);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pagina-calendario .formulario-evento input,
+.pagina-calendario .formulario-evento textarea,
+.pagina-calendario .formulario-evento select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-pequeno);
+  outline: none;
+  background: var(--cal-cor-fundo);
+  color: var(--cal-cor-texto);
+  font: inherit;
+  transition: border-color var(--cal-transicao-padrao);
+}
+
+.pagina-calendario .formulario-evento textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.pagina-calendario .formulario-evento input:focus,
+.pagina-calendario .formulario-evento textarea:focus,
+.pagina-calendario .formulario-evento select:focus {
+  border-color: var(--cal-cor-principal);
+}
+
+.pagina-calendario .formulario-evento button[type="submit"] {
+  margin-top: 12px;
+}
+
+.pagina-calendario .grupo-campos-evento,
+.pagina-calendario .grade-detalhes-evento,
+.pagina-calendario .acoes-evento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pagina-calendario .grupo-campos-evento {
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.pagina-calendario .grupo-campos-evento > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pagina-calendario .campo-ordinal {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--cal-cor-fundo);
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-pequeno);
+}
+
+.pagina-calendario .campo-ordinal:focus-within {
+  border-color: var(--cal-cor-principal);
+}
+
+.pagina-calendario .formulario-evento .campo-ordinal input {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pagina-calendario .campo-ordinal span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  border-left: 1px solid var(--cal-cor-borda);
+  color: var(--cal-cor-texto-secundario);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ==========================
+   DETALHES DO EVENTO
+========================== */
+
+.pagina-calendario .grade-detalhes-evento {
+  gap: 10px;
+}
+
+.pagina-calendario .detalhe-evento {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  color: var(--cal-cor-texto);
+  line-height: 1.6;
+}
+
+.pagina-calendario .grade-detalhes-evento .detalhe-evento {
+  min-width: 0;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-pequeno);
+}
+
+.pagina-calendario .detalhe-evento > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pagina-calendario .detalhe-icone {
+  flex-shrink: 0;
+  font-size: 17px;
+}
+
+.pagina-calendario .detalhe-evento small,
+.pagina-calendario .descricao-detalhe-evento small {
+  color: var(--cal-cor-texto-suave);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pagina-calendario .detalhe-evento strong {
+  overflow-wrap: anywhere;
+  color: var(--cal-cor-texto);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.pagina-calendario .destaque-trilha strong {
+  color: var(--cal-cor-principal);
+  font-size: 16px;
+}
+
+.pagina-calendario .descricao-detalhe-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border-left: 3px solid var(--cal-cor-principal);
+  border-radius: 0 var(--cal-raio-pequeno) var(--cal-raio-pequeno) 0;
+}
+
+.pagina-calendario .descricao-detalhe-evento p {
+  margin: 0;
+  color: var(--cal-cor-texto-secundario);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.pagina-calendario .status-bolinha {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pagina-calendario .status-lancado {
+  color: #4da3ff;
+}
+
+.pagina-calendario .status-confirmado {
+  color: #45c46b;
+}
+
+.pagina-calendario .status-cancelado {
+  color: #ef5350;
+}
+
+.pagina-calendario .detalhes-evento > .status-lancado,
+.pagina-calendario .detalhes-evento > .status-confirmado,
+.pagina-calendario .detalhes-evento > .status-cancelado {
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border-radius: var(--cal-raio-pequeno);
+}
+
+.pagina-calendario .acoes-evento {
+  gap: 10px;
+  margin-top: 0;
+}
+
+.pagina-calendario .acoes-evento .botao-controle {
+  width: 100%;
+}
+
+/* ==========================
+   PREVISÃO HORÁRIA
+========================== */
+
+.pagina-calendario .painel-previsao-dia {
+  display: none;
+  min-height: 150px;
+  margin-bottom: 20px;
+  padding: 18px;
+  background: #202321;
+  border: 1px solid #343936;
+  border-radius: 12px;
+}
+
+.pagina-calendario .cabecalho-previsao-dia {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.pagina-calendario .cabecalho-previsao-dia span {
+  color: var(--cal-cor-principal);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.pagina-calendario .cabecalho-previsao-dia h2 {
+  margin-top: 4px;
+  color: var(--cal-cor-texto);
+  font-size: 20px;
+}
+
+.pagina-calendario .cabecalho-previsao-dia p {
+  color: var(--cal-cor-texto-suave);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.pagina-calendario .faixa-previsao-horaria {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cal-cor-borda-clara) transparent;
+}
+
+.pagina-calendario .previsao-hora {
+  display: flex;
+  flex: 0 0 82px;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  min-width: 82px;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cal-cor-borda);
+  border-radius: var(--cal-raio-pequeno);
+}
+
+.pagina-calendario .previsao-hora strong {
+  color: var(--cal-cor-texto-secundario);
+  font-size: 13px;
+}
+
+.pagina-calendario .previsao-hora-temperatura {
+  color: var(--cal-cor-principal);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.pagina-calendario .previsao-hora-chuva {
+  color: var(--cal-cor-texto-suave);
+  font-size: 12px;
+}
+
+.pagina-calendario .previsao-indisponivel {
+  color: var(--cal-cor-texto-suave);
+  text-align: center;
+}
+
+/* ==========================
+   RODAPÉ
+========================== */
+
+.pagina-calendario .rodape-calendario {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  color: var(--cal-cor-texto-secundario);
+  text-align: center;
+}
+
+/* ==========================
+   RESPONSIVIDADE
+========================== */
+
+@media (max-width: 1100px) {
+  .pagina-calendario .conteudo-principal {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+
+  .pagina-calendario .card-dia {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 850px) {
+  .pagina-calendario .conteudo-principal {
+    grid-template-columns: 1fr;
+    padding: 16px 0;
+  }
+
+  .pagina-calendario .painel-evento {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .pagina-calendario {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .pagina-calendario .cabecalho-principal {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pagina-calendario .marca-linha {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pagina-calendario .marca-linha h1 {
+    font-size: 23px;
+    white-space: normal;
+  }
+
+  .pagina-calendario .botao-atualizar-clima {
+    width: 100%;
+  }
+
+  .pagina-calendario .area-calendario {
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  .pagina-calendario .cabecalho-calendario {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pagina-calendario .controle-mes-principal {
+    justify-content: space-between;
+  }
+
+  .pagina-calendario .dias-semana,
+  .pagina-calendario .calendario {
+    min-width: 700px;
+  }
+
+  .pagina-calendario .grupo-campos-evento,
+  .pagina-calendario .grade-detalhes-evento,
+  .pagina-calendario .acoes-evento {
+    grid-template-columns: 1fr;
+  }
+}

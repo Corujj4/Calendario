@@ -1,0 +1,104 @@
+/* ==========================
+   CONTAINER
+========================== */
+.navbar {
+  
+  position: relative;
+  z-index: 1000;
+
+  width: calc(100% - 56px);
+  margin: 14px auto 0;
+  
+  z-index: 1000;
+
+  width: fit-content;
+  max-width: calc(100% - 40px);
+
+  overflow: hidden;
+
+  background: rgba(247, 145, 11, 0.94);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.navbar-conteudo {
+  display: flex;
+  align-items: stretch;
+}
+
+/* ==========================
+   LOGO
+========================== */
+.navbar-logo {
+  display: none;
+}
+
+/* ==========================
+   LINKS
+========================== */
+.navbar-links {
+  display: flex;
+  align-items: stretch;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.navbar-links li {
+  display: flex;
+}
+
+.navbar-links a {
+  min-width: 145px;
+  padding: 18px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--cor-texto-claro);
+  font-size: 20px;
+  font-weight: 500;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.navbar-links a:hover {
+  background: rgba(70, 35, 5, 0.45);
+}
+
+.navbar-links a.ativo {
+  background: #2e1808;
+  color: var(--cor-texto-claro);
+}
+
+/* ==========================
+   RESPONSIVO
+========================== */
+@media (max-width: 760px) {
+  .navbar {
+    top: 10px;
+
+    width: calc(100% - 20px);
+    max-width: none;
+    margin-top: 10px;
+
+    overflow-x: auto;
+  }
+
+  .navbar-conteudo {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .navbar-links a {
+    min-width: 115px;
+    padding: 15px 18px;
+
+    font-size: 16px;
+  }
+}

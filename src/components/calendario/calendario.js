@@ -1,9 +1,12 @@
-const calendario = document.querySelector("#calendario");
-const tituloMes = document.querySelector("#titulo-mes");
+import "./calendario.css";
 
-const botaoMesAnterior = document.querySelector("#botao-mes-anterior");
-const botaoProximoMes = document.querySelector("#botao-proximo-mes");
-const botaoHoje = document.querySelector("#botao-hoje");
+let botaoHojeRegistrado = null;
+let calendario;
+let tituloMes;
+
+let botaoMesAnterior;
+let botaoProximoMes;
+let botaoHoje;
 
 const nomesMeses = [
   "Janeiro",
@@ -25,11 +28,25 @@ const hoje = new Date();
 let anoAtual = hoje.getFullYear();
 let mesAtual = hoje.getMonth();
 
-export function criarCalendario() {
+function carregarElementos() {
+    calendario = document.querySelector("#calendario");
+    tituloMes = document.querySelector("#titulo-mes");
 
-  document.dispatchEvent(
-  new Event("calendarioRenderizado")
-);
+    botaoMesAnterior = document.querySelector("#botao-mes-anterior");
+    botaoProximoMes = document.querySelector("#botao-proximo-mes");
+    botaoHoje = document.querySelector("#botao-hoje");
+}
+
+
+export function criarCalendario() {
+  carregarElementos();
+
+  if (!calendario || !tituloMes) {
+    console.error("Estrutura do calendário não encontrada.");
+    return;
+  }
+
+  registrarEventos();
 
   const primeiroDiaSemana = new Date(anoAtual, mesAtual, 1).getDay();
 
@@ -88,14 +105,23 @@ export function criarCalendario() {
   }
 
   
-  document.dispatchEvent(
-  new CustomEvent("calendarioRenderizado"),
-);
+  document.dispatchEvent(new Event("calendarioRenderizado"));
 
 }
 
-botaoMesAnterior.addEventListener("click", () => {
-  mesAtual--;
+function registrarEventos() {
+  if (!botaoMesAnterior || !botaoProximoMes || !botaoHoje) {
+    return;
+  }
+
+  if (botaoHojeRegistrado === botaoHoje) {
+    return;
+  }
+
+  botaoHojeRegistrado = botaoHoje;
+
+  botaoMesAnterior.addEventListener("click", () => {
+        mesAtual--;
 
   if (mesAtual < 0) {
     mesAtual = 11;
@@ -103,10 +129,10 @@ botaoMesAnterior.addEventListener("click", () => {
   }
 
   criarCalendario();
-});
+    });
 
-botaoProximoMes.addEventListener("click", () => {
-  mesAtual++;
+    botaoProximoMes.addEventListener("click", () => {
+         mesAtual++;
 
   if (mesAtual > 11) {
     mesAtual = 0;
@@ -114,13 +140,12 @@ botaoProximoMes.addEventListener("click", () => {
   }
 
   criarCalendario();
-});
+    });
 
-
-
-botaoHoje.addEventListener("click", () => {
-  anoAtual = hoje.getFullYear();
+    botaoHoje.addEventListener("click", () => {
+        anoAtual = hoje.getFullYear();
   mesAtual = hoje.getMonth();
 
   criarCalendario();
-});
+    });
+}

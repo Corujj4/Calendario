@@ -1,13 +1,14 @@
-import { obterPrevisaoPorData } from "../services/clima.js";
+import { obterPrevisaoPorData } from "../../services/clima.js";
 
-const painel = document.querySelector(
-  "#painel-previsao-dia",
-);
+let painel;
+
 export function esconderPainelPrevisao() {
+   carregarPainel();
   painel.style.display = "none";
 }
 
 export function atualizarPainelPrevisao(data) {
+   carregarPainel();
     painel.style.display = "block";
   const previsao = obterPrevisaoPorData(data);
 
@@ -104,4 +105,7 @@ function formatarData(data) {
       dataCompleta.charAt(0).toUpperCase() +
       dataCompleta.slice(1),
   };
+}
+function carregarPainel() {
+    painel = document.querySelector("#painel-previsao-dia");
 }
