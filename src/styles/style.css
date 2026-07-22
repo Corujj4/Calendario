@@ -14,7 +14,8 @@
 
   --cor-borda: #d8ddd7;
 
-  --largura-conteudo: 1400px;
+  --largura-conteudo: 1260px;
+   --espaco-topo: 40px;
   --raio-card: 14px;
   --sombra-card: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
@@ -42,8 +43,7 @@ body {
       rgba(255, 255, 255, 0.25),
       rgba(255, 255, 255, 0.25)
     ),
-    url("./assets/fundo-trilhas.jpg") center / cover no-repeat fixed;
-
+    url("../assets/fundo-trilhas.jpg") center / cover no-repeat fixed;
   color: var(--cor-texto);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -77,3 +77,4 @@ img {
 #app {
   min-height: 100vh;
 }
+

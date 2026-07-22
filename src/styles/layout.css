@@ -1,0 +1,26 @@
+/* ==========================
+   LAYOUT GERAL DAS PÁGINAS
+========================== */
+
+.layout-pagina {
+  width: min(var(--largura-conteudo), calc(100% - 56px));
+   margin:var(--espaco-topo) auto 70px;
+}
+
+/* Evita diferenças de largura quando aparece a barra de rolagem */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+/* ==========================
+   RESPONSIVIDADE GERAL
+========================== */
+
+@media (max-width: 760px) {
+  .layout-pagina {
+    width: calc(100% - 28px);
+    margin-top: 24px;
+    margin-bottom: 50px;
+  }
+}

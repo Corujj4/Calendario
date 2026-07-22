@@ -1,5 +1,5 @@
 import { trilhas } from "./trilhasdados.js";
-import "./trilhas.css";
+
 
 function normalizarTexto(texto) {
   return String(texto)
@@ -108,7 +108,7 @@ function renderDetalhesTrilha(trilha) {
           <i class="fa-solid fa-cloud-sun"></i>
           <div>
             <span>Grupo climático</span>
-            <strong>${trilha.clima}</strong>
+            <strong>${obterNomeClima(trilha.clima)}</strong>
           </div>
         </div>
 
@@ -242,7 +242,7 @@ export function iniciarTrilhas() {
 
 export function renderTrilhasView() {
   return `
-    <div class="pagina-trilhas">
+    <div class="layout-pagina pagina-trilhas">
       <header class="trilhas-cabecalho">
         <h1>
     <i class="fa-solid fa-person-hiking"></i>
@@ -313,4 +313,19 @@ export function renderTrilhasView() {
       </main>
     </div>
   `;
+}
+function obterNomeClima(clima) {
+    switch (Number(clima)) {
+        case 1:
+            return "Verão";
+
+        case 2:
+            return "Primavera / Outono";
+
+        case 3:
+            return "Inverno";
+
+        default:
+            return "Não informado";
+    }
 }

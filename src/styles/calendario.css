@@ -20,9 +20,7 @@
   --cal-raio-card: 10px;
   --cal-transicao-padrao: 0.2s ease;
 
-  width: min(95%, 1700px);
-  margin: 0 auto;
-  padding: 20px;
+  padding: 0;
   color: var(--cal-cor-texto);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -36,13 +34,14 @@
 ========================== */
 
 .pagina-calendario .cabecalho-principal {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 18px;
-  padding: 18px 26px;
-  background: #232625;
+  gap: 20px;
+  padding: 22px 28px;
+  margin-bottom: 20px;
+  background: var(--cal-cor-painel);
   border: 1px solid #383d39;
   border-radius: 14px;
 }
@@ -115,6 +114,7 @@
 
 .pagina-calendario .botao-atualizar-clima,
 .pagina-calendario .botao-controle.botao-atualizar-clima {
+  width: auto;
   flex-shrink: 0;
   padding: 11px 18px;
   border-color: #c9952d;
@@ -195,14 +195,13 @@
   grid-template-columns: minmax(0, 1fr) 300px;
   gap: 18px;
   width: 100%;
-  max-width: 1450px;
-  margin: 0 auto;
   padding: 24px 0;
 }
 
 .pagina-calendario .area-calendario {
   min-width: 0;
   padding: 20px;
+  overflow-x: auto;
   background: #232625;
   border: 1px solid #383d39;
   border-radius: 14px;
@@ -237,7 +236,7 @@
 .pagina-calendario .dias-semana,
 .pagina-calendario .calendario {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(115px, 1fr));
 }
 
 .pagina-calendario .dias-semana {
@@ -1057,20 +1056,9 @@
    RESPONSIVIDADE
 ========================== */
 
-@media (max-width: 1100px) {
-  .pagina-calendario .conteudo-principal {
-    grid-template-columns: minmax(0, 1fr) 260px;
-  }
-
-  .pagina-calendario .card-dia {
-    min-height: 100px;
-  }
-}
-
-@media (max-width: 850px) {
+@media (max-width: 1250px) {
   .pagina-calendario .conteudo-principal {
     grid-template-columns: 1fr;
-    padding: 16px 0;
   }
 
   .pagina-calendario .painel-evento {
@@ -1079,14 +1067,14 @@
 }
 
 @media (max-width: 650px) {
-  .pagina-calendario {
-    width: 100%;
-    padding: 12px;
-  }
-
   .pagina-calendario .cabecalho-principal {
     align-items: flex-start;
     flex-direction: column;
+    padding: 18px;
+  }
+
+  .pagina-calendario .marca-sistema {
+    align-items: flex-start;
   }
 
   .pagina-calendario .marca-linha {
@@ -1100,7 +1088,12 @@
     white-space: normal;
   }
 
-  .pagina-calendario .botao-atualizar-clima {
+  .pagina-calendario .marca-linha span {
+    white-space: normal;
+  }
+
+  .pagina-calendario .botao-atualizar-clima,
+  .pagina-calendario .botao-controle.botao-atualizar-clima {
     width: 100%;
   }
 
@@ -1120,7 +1113,7 @@
 
   .pagina-calendario .dias-semana,
   .pagina-calendario .calendario {
-    min-width: 700px;
+    min-width: 805px;
   }
 
   .pagina-calendario .grupo-campos-evento,

@@ -1,11 +1,15 @@
-import "./home.css";
+
 import trilha1 from './images/trilha1.jpg';
 import trilha2 from './images/trilha2.jpg';
 import trilha3 from './images/trilha3.jpg';
 
 export function renderCarrossel() {
   return `
-    <section class="carrossel">
+    <section class=<main class="layout-pagina pagina-home">
+  <section class="carrossel">
+    ...
+  </section>
+</main>>
       <div class="carrossel-container">
         <img
           class="carrossel-imagem ativa"

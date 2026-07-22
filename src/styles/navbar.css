@@ -1,18 +1,14 @@
 /* ==========================
    CONTAINER
 ========================== */
-.navbar {
-  
-  position: relative;
-  z-index: 1000;
 
-  width: calc(100% - 56px);
-  margin: 14px auto 0;
-  
+.navbar {
+  position: relative;
   z-index: 1000;
 
   width: fit-content;
   max-width: calc(100% - 40px);
+  margin: 14px auto 0;
 
   overflow: hidden;
 
@@ -81,8 +77,6 @@
 ========================== */
 @media (max-width: 760px) {
   .navbar {
-    top: 10px;
-
     width: calc(100% - 20px);
     max-width: none;
     margin-top: 10px;
@@ -98,7 +92,6 @@
   .navbar-links a {
     min-width: 115px;
     padding: 15px 18px;
-
     font-size: 16px;
   }
 }

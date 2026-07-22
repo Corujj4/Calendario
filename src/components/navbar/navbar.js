@@ -1,4 +1,4 @@
-import "./navbar.css";
+
 
 export function renderNavbar() {
   const rotaAtual = window.location.hash.slice(1) || "/";

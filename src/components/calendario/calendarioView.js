@@ -1,6 +1,6 @@
 export function renderCalendarioView() {
   return `
-    <div class="pagina-calendario">
+    <main class="layout-pagina pagina-calendario">
       <header class="cabecalho-principal">
         <div class="marca-sistema">
           <div class="marca-icone">🥾</div>
@@ -25,7 +25,7 @@ export function renderCalendarioView() {
         class="painel-previsao-dia"
       ></section>
 
-      <main class="conteudo-principal">
+      <section class="conteudo-principal">
         <section class="area-calendario">
           <div class="cabecalho-calendario">
             <div class="controle-mes-principal">
@@ -85,13 +85,13 @@ export function renderCalendarioView() {
             </p>
           </div>
         </aside>
-      </main>
+      </section>
 
       <footer class="rodape-calendario">
         <p id="ultima-atualizacao-clima">
           Clima ainda não atualizado
         </p>
       </footer>
-    </div>
+    </main>
   `;
 }
