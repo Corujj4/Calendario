@@ -1,10 +1,11 @@
 import { renderHome } from "./pages/homePage.js";
 import { renderCalendario } from "./pages/calendarioPage.js";
-import { renderTrilhas } from "./pages/trilhasPage.js";
 import { renderGaleria } from "./pages/galeriaPage.js";
 import { criarCalendario } from "./components/calendario/calendario.js";
 import { configurarClima } from "./services/clima.js";
 import { configurarEventos } from "./services/eventos.js";
+import { renderNavbar } from "./components/navbar/navbar.js";
+import {renderTrilhas,iniciarPaginaTrilhas} from "./pages/trilhasPage.js";
 
 const rotas = {
   "/": renderHome,
@@ -30,6 +31,10 @@ function renderizarPagina() {
     configurarClima();
     configurarEventos();
     criarCalendario();
+  }
+
+   if (rotaAtual === "/trilhas") {
+    iniciarPaginaTrilhas();
   }
 } 
 

@@ -1,11 +1,17 @@
+import {
+  renderTrilhasView,
+  iniciarTrilhas
+} from "../components/trilhas/trilhasView.js";
+
 import { renderNavbar } from "../components/navbar/navbar.js";
 
 export function renderTrilhas() {
   return `
     ${renderNavbar()}
-
-    <main>
-      <h1>Trilhas</h1>
-    </main>
+    ${renderTrilhasView()}
   `;
+}
+
+export function iniciarPaginaTrilhas() {
+  iniciarTrilhas();
 }
