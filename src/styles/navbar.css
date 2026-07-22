@@ -8,7 +8,7 @@
 
   width: fit-content;
   max-width: calc(100% - 40px);
-  margin: 14px auto 0;
+  margin:0 auto;
 
   overflow: hidden;
 
@@ -25,9 +25,39 @@
 /* ==========================
    LOGO
 ========================== */
-.navbar-logo {
-  display: none;
+/* ==========================
+   TOPO
+========================== */
+
+.topo-site{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    margin-top:22px;
 }
+
+.navbar-logo{
+
+    display:block;
+
+    margin-bottom:16px;
+}
+
+.navbar-logo-imagem{
+
+    width:230px;
+
+    height:auto;
+
+    display:block;
+
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,.28));
+
+    transition:.25s;
+}
+
 
 /* ==========================
    LINKS

@@ -1,5 +1,5 @@
 import { renderNavbar } from "../components/navbar/navbar.js";
-import { renderCarrossel } from "../components/home/carrossel.js";
+import { renderAtividades } from "../components/home/atividades.js";
 import { renderFooter } from "../components/home/footer.js";
 
 export function renderHome() {
@@ -7,7 +7,7 @@ export function renderHome() {
     ${renderNavbar()}
 
     <main>
-      ${renderCarrossel()}
+      ${renderAtividades()}
     </main>
 
     ${renderFooter()}

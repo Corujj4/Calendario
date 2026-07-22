@@ -1,5 +1,5 @@
 
-
+import logo from "../../assets/logo.png";
 export function renderNavbar() {
   const rotaAtual = window.location.hash.slice(1) || "/";
 
@@ -7,53 +7,62 @@ export function renderNavbar() {
     return rotaAtual === rota ? "ativo" : "";
   }
 
-  return `
+ return `
+<header class="topo-site">
+
+    <a class="navbar-logo">
+        <img
+            src="${logo}"
+            alt="Ecotrekking"
+            class="navbar-logo-imagem"
+        >
+    </a>
+
     <nav class="navbar">
-      <div class="navbar-conteudo">
-        <a href="#/" class="navbar-logo">
-          <div class="navbar-logo-icone">🥾</div>
 
-          <div class="navbar-logo-texto">
-            <strong>EcoTrekking</strong>
-            <span>Aventura e natureza</span>
-          </div>
-        </a>
+        <div class="navbar-conteudo">
 
-        <ul class="navbar-links">
-          <li>
-            <a href="#/" class="${classeAtiva("/")}">
-              Início
-            </a>
-          </li>
+            <ul class="navbar-links">
 
-          <li>
-            <a
-              href="#/calendario"
-              class="${classeAtiva("/calendario")}"
-            >
-              Calendário
-            </a>
-          </li>
+                <li>
+                    <a href="#/" class="${classeAtiva("/")}">
+                        Início
+                    </a>
+                </li>
 
-          <li>
-            <a
-              href="#/trilhas"
-              class="${classeAtiva("/trilhas")}"
-            >
-              Trilhas
-            </a>
-          </li>
+                <li>
+                    <a
+                        href="#/calendario"
+                        class="${classeAtiva("/calendario")}"
+                    >
+                        Calendário
+                    </a>
+                </li>
 
-          <li>
-            <a
-              href="#/galeria"
-              class="${classeAtiva("/galeria")}"
-            >
-              Galeria
-            </a>
-          </li>
-        </ul>
-      </div>
+                <li>
+                    <a
+                        href="#/trilhas"
+                        class="${classeAtiva("/trilhas")}"
+                    >
+                        Trilhas
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="#/galeria"
+                        class="${classeAtiva("/galeria")}"
+                    >
+                        Galeria
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
     </nav>
-  `;
+
+</header>
+`;
 }

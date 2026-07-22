@@ -2,9 +2,10 @@
    LAYOUT GERAL DAS PÁGINAS
 ========================== */
 
+
 .layout-pagina {
   width: min(var(--largura-conteudo), calc(100% - 56px));
-   margin:var(--espaco-topo) auto 70px;
+    margin: 26px auto 55px;
 }
 
 /* Evita diferenças de largura quando aparece a barra de rolagem */
@@ -24,3 +25,4 @@ html {
     margin-bottom: 50px;
   }
 }
+

@@ -25,7 +25,7 @@ export function renderCalendarioView() {
         class="painel-previsao-dia"
       ></section>
 
-      <section class="conteudo-principal">
+       <section class="conteudo-principal">
         <section class="area-calendario">
           <div class="cabecalho-calendario">
             <div class="controle-mes-principal">
@@ -49,7 +49,7 @@ export function renderCalendarioView() {
                 →
               </button>
             </div>
-
+            <!--
             <button
               id="botao-hoje"
               class="botao-controle"
@@ -57,6 +57,7 @@ export function renderCalendarioView() {
             >
               Hoje
             </button>
+            -->
           </div>
 
           <div class="dias-semana" aria-hidden="true">
@@ -76,7 +77,7 @@ export function renderCalendarioView() {
           ></section>
         </section>
 
-        <aside id="painel-evento" class="painel-evento">
+        <aside id="painel-evento" class="painel-evento painel-oculto">
           <div class="painel-vazio">
             <h2>Detalhes da trilha</h2>
 
@@ -85,6 +86,7 @@ export function renderCalendarioView() {
             </p>
           </div>
         </aside>
+         
       </section>
 
       <footer class="rodape-calendario">

@@ -70,7 +70,7 @@ function renderDetalhesTrilha(trilha) {
     <div class="trilha-detalhes-conteudo">
       <header class="trilha-detalhes-cabecalho">
         <div>
-          <span class="trilha-detalhes-id">Trilha #${trilha.id}</span>
+          <span class="trilha-detalhes-id"></span>
           <h2>${trilha.nome}</h2>
         </div>
 
