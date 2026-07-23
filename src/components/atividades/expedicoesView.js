@@ -1,4 +1,7 @@
 import { expedicoes } from "./ecodados.js";
+import L from "leaflet";
+import "leaflet-routing-machine";
+
 
 function normalizarTexto(texto) {
   return String(texto)
@@ -161,22 +164,13 @@ function renderDetalhesExpedicao(expedicao) {
       Percurso da expedição
     </h3>
 
-    <span>Visualização preliminar</span>
+    <span>${expedicao.distancia} km</span>
   </div>
 
-  <div class="expedicao-mapa-area">
-    <div class="expedicao-mapa-linha"></div>
-
-    <span class="expedicao-mapa-ponto inicio"></span>
-    <span class="expedicao-mapa-ponto fim"></span>
-
-    <span class="expedicao-mapa-texto inicio">
-      Início
-    </span>
-
-    <span class="expedicao-mapa-texto fim">
-      Destino
-    </span>
+  <div
+    id="mapa-expedicao"
+    class="expedicao-mapa-area"
+    aria-label="Mapa da expedição ${expedicao.nome}">
   </div>
 </div>
 
@@ -251,25 +245,35 @@ function aplicarFiltrosExpedicoes() {
   adicionarEventosExpedicoes();
 }
 
-function selecionarExpedicao(id) {
-  const expedicao = expedicoes.find(
-    (item) => item.id === Number(id)
-  );
+function selecionarExpedicao(idExpedicao) {
+  const painel = document.querySelector("#painel-detalhes-expedicao");
 
-  const painel = document.querySelector(
-    "#painel-detalhes-expedicao"
-  );
-
-  if (!expedicao || !painel) {
+  if (!painel) {
     return;
   }
 
-  painel.innerHTML = renderDetalhesExpedicao(expedicao);
+  const expedicaoSelecionada = expedicoes.find(
+    (expedicao) => String(expedicao.id) === String(idExpedicao)
+  );
+
+  if (!expedicaoSelecionada) {
+    console.error("Expedição não encontrada:", idExpedicao);
+    return;
+  }
+
+  if (mapaExpedicao) {
+    mapaExpedicao.remove();
+    mapaExpedicao = null;
+  }
+
+  painel.innerHTML = renderDetalhesExpedicao(expedicaoSelecionada);
+
+  criarMapaExpedicao(expedicaoSelecionada);
 
   document.querySelectorAll(".expedicao-item").forEach((item) => {
     item.classList.toggle(
       "ativa",
-      Number(item.dataset.expedicaoId) === expedicao.id
+      String(item.dataset.expedicaoId) === String(idExpedicao)
     );
   });
 }
@@ -280,6 +284,109 @@ function adicionarEventosExpedicoes() {
       selecionarExpedicao(item.dataset.expedicaoId);
     });
   });
+}
+let mapaExpedicao = null;
+let controleRota = null;
+
+function criarMapaExpedicao(expedicao) {
+  const elementoMapa = document.querySelector("#mapa-expedicao");
+
+  if (!elementoMapa) {
+    return;
+  }
+
+  if (!expedicao.origem || !expedicao.destino) {
+    elementoMapa.innerHTML = `
+      <div class="expedicao-mapa-indisponivel">
+        <i class="fa-solid fa-location-dot"></i>
+        <p>Origem ou destino não cadastrado.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  if (mapaExpedicao) {
+    mapaExpedicao.remove();
+    mapaExpedicao = null;
+    controleRota = null;
+  }
+
+  mapaExpedicao = L.map(elementoMapa);
+
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | Rota: OSRM'
+  }).addTo(mapaExpedicao);
+
+  controleRota = L.Routing.control({
+    waypoints: [
+      L.latLng(expedicao.origem[0], expedicao.origem[1]),
+      L.latLng(expedicao.destino[0], expedicao.destino[1])
+    ],
+
+    router: L.Routing.osrmv1({
+      serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+
+    routeWhileDragging: false,
+    addWaypoints: false,
+    draggableWaypoints: false,
+    fitSelectedRoutes: true,
+    showAlternatives: false,
+
+    lineOptions: {
+      styles: [
+        {
+          weight: 6,
+          opacity: 0.9
+        }
+      ],
+
+      extendToWaypoints: true,
+      missingRouteTolerance: 0
+    },
+
+    createMarker(indice, waypoint) {
+      const nome = indice === 0 ? "Santa Maria" : expedicao.nome;
+
+      return L.marker(waypoint.latLng).bindPopup(
+        `<strong>${nome}</strong>`
+      );
+    }
+  }).addTo(mapaExpedicao);
+
+  controleRota.on("routesfound", (evento) => {
+    const rota = evento.routes[0];
+
+    if (!rota) {
+      return;
+    }
+
+    const distanciaKm = rota.summary.totalDistance / 1000;
+    const duracaoMinutos = rota.summary.totalTime / 60;
+
+    console.log("Distância:", distanciaKm.toFixed(1), "km");
+    console.log("Duração:", duracaoMinutos.toFixed(0), "minutos");
+  });
+
+  controleRota.on("routingerror", (erro) => {
+    console.error("Não foi possível calcular a rota:", erro);
+
+    elementoMapa.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="expedicao-erro-rota">
+          Não foi possível calcular a rota neste momento.
+        </div>
+      `
+    );
+  });
+
+  setTimeout(() => {
+    mapaExpedicao?.invalidateSize();
+  }, 0);
 }
 
 export function iniciarExpedicoes() {

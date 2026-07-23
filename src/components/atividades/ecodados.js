@@ -599,8 +599,11 @@ export const expedicoes = [
     cidade: "#",
     estado: "RS",
     imagem: "#",
-    mapa: "#"
+    mapa: "#",
+    origem: [-29.6868, -53.8149],   // Santa Maria
+    destino: [-29.1673, -51.8745],  // Muçum
   },
+
   {
     id: 35,
     nome: "São José dos Ausentes",
@@ -615,7 +618,9 @@ export const expedicoes = [
     cidade: "#",
     estado: "RS",
     imagem: "#",
-    mapa: "#"
+    mapa: "#",
+    origem: [-29.6868, -53.8149],   // Santa Maria
+    destino: [-28.7477, -50.0646],  // São José dos Ausentes
   },
   {
     id: 34,
