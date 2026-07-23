@@ -5,6 +5,8 @@ import "./styles/navbar.css";
 import "./styles/home.css";
 import "./styles/calendario.css";
 import "./styles/trilhas.css";
+import "./styles/rapel.css";
+import "./styles/expedicao.css";
 import { iniciarRouter } from "./router.js";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 

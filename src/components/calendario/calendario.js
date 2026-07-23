@@ -110,42 +110,39 @@ export function criarCalendario() {
 }
 
 function registrarEventos() {
-  if (!botaoMesAnterior || !botaoProximoMes || !botaoHoje) {
+  if (!botaoMesAnterior || !botaoProximoMes) {
+    console.error("Botões de navegação do calendário não encontrados.");
     return;
   }
 
-  if (botaoHojeRegistrado === botaoHoje) {
-    return;
+  botaoMesAnterior.onclick = () => {
+    mesAtual--;
+
+    if (mesAtual < 0) {
+      mesAtual = 11;
+      anoAtual--;
+    }
+
+    criarCalendario();
+  };
+
+  botaoProximoMes.onclick = () => {
+    mesAtual++;
+
+    if (mesAtual > 11) {
+      mesAtual = 0;
+      anoAtual++;
+    }
+
+    criarCalendario();
+  };
+
+  if (botaoHoje) {
+    botaoHoje.onclick = () => {
+      anoAtual = hoje.getFullYear();
+      mesAtual = hoje.getMonth();
+
+      criarCalendario();
+    };
   }
-
-  botaoHojeRegistrado = botaoHoje;
-
-  botaoMesAnterior.addEventListener("click", () => {
-        mesAtual--;
-
-  if (mesAtual < 0) {
-    mesAtual = 11;
-    anoAtual--;
-  }
-
-  criarCalendario();
-    });
-
-    botaoProximoMes.addEventListener("click", () => {
-         mesAtual++;
-
-  if (mesAtual > 11) {
-    mesAtual = 0;
-    anoAtual++;
-  }
-
-  criarCalendario();
-    });
-
-    botaoHoje.addEventListener("click", () => {
-        anoAtual = hoje.getFullYear();
-  mesAtual = hoje.getMonth();
-
-  criarCalendario();
-    });
 }

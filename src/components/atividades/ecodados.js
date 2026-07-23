@@ -527,55 +527,10 @@ export const trilhas = [
     imagem: "#",
     mapa: "#"
   },
-  {
-    id: 34,
-    nome: "Ferrovia do Vinho",
-    distancia: 14,
-    nivel: 7,
-    dificuldade: "Média",
-    clima: 3,
-    temperatura: "Até 25º C",
-    local: "#",
-    capacidade: 25,
-    descricao: "#",
-    cidade: "#",
-    estado: "RS",
-    imagem: "#",
-    mapa: "#"
-  },
-  {
-    id: 35,
-    nome: "São José dos Ausentes",
-    distancia: 27,
-    nivel: 8,
-    dificuldade: "Difícil-média",
-    clima: 3,
-    temperatura: "Até 25º C",
-    local: "#",
-    capacidade: 20,
-    descricao: "#",
-    cidade: "#",
-    estado: "RS",
-    imagem: "#",
-    mapa: "#"
-  },
+  
+  
    
-  {
-    id: 36,
-    nome: "Ferrovia do Trigo",
-    distancia: "#",
-    nivel: 7,
-    dificuldade: "Média",
-    clima: 3,
-    temperatura: "Até 25º C",
-    local: "#",
-    capacidade: 25,
-    descricao: "#",
-    cidade: "#",
-    estado: "RS",
-    imagem: "#",
-    mapa: "#"
-  },
+  
   {
     id: 37,
     nome: "Peral do Facão",
@@ -608,4 +563,74 @@ export const trilhas = [
     imagem: "#",
     mapa: "#"
   }
+];
+
+export const rapeis = [
+  // todos os rapeis
+  {
+    id: 3,
+    nome: "Adelar e Rocha",
+    altura: 30,
+    clima: 2,
+    temperatura: "< 25º C",
+    local: "#",
+    capacidade: 15,
+    descricao: "#",
+    cidade: "#",
+    estado: "RS",
+    imagem: "#",
+    mapa: "#"
+  },
+];
+
+export const expedicoes = [
+  // todas as expedições
+  {
+    id: 36,
+    nome: "Ferrovia do Trigo",
+    distancia: "#",
+    nivel: 7,
+    dificuldade: "Média",
+    clima: 3,
+    temperatura: "Até 25º C",
+    local: "#",
+    capacidade: 25,
+    descricao: "#",
+    cidade: "#",
+    estado: "RS",
+    imagem: "#",
+    mapa: "#"
+  },
+  {
+    id: 35,
+    nome: "São José dos Ausentes",
+    distancia: 27,
+    nivel: 8,
+    dificuldade: "Difícil-média",
+    clima: 3,
+    temperatura: "Até 25º C",
+    local: "#",
+    capacidade: 20,
+    descricao: "#",
+    cidade: "#",
+    estado: "RS",
+    imagem: "#",
+    mapa: "#"
+  },
+  {
+    id: 34,
+    nome: "Ferrovia do Vinho",
+    distancia: 14,
+    nivel: 7,
+    dificuldade: "Média",
+    clima: 3,
+    temperatura: "Até 25º C",
+    local: "#",
+    capacidade: 25,
+    descricao: "#",
+    cidade: "#",
+    estado: "RS",
+    imagem: "#",
+    mapa: "#"
+  },
 ];

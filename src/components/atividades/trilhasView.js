@@ -1,4 +1,4 @@
-import { trilhas } from "./trilhasdados.js";
+import { trilhas } from "./ecodados.js";
 
 
 function normalizarTexto(texto) {

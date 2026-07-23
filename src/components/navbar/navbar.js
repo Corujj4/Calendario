@@ -49,6 +49,22 @@ export function renderNavbar() {
                 </li>
 
                 <li>
+                    <a href="#/rapel" 
+                        class="${classeAtiva("/rapel")}"
+                    >
+                        Rapel
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#/expedicoes" 
+                        class="${classeAtiva("/expedicoes")}"
+                    >
+                        Expedições
+                    </a>
+                </li>
+
+                <li>
                     <a
                         href="#/galeria"
                         class="${classeAtiva("/galeria")}"

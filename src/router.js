@@ -6,12 +6,16 @@ import { configurarClima } from "./services/clima.js";
 import { configurarEventos } from "./services/eventos.js";
 import { renderNavbar } from "./components/navbar/navbar.js";
 import {renderTrilhas,iniciarPaginaTrilhas} from "./pages/trilhasPage.js";
+import {renderRapel,iniciarPaginaRapel} from "./pages/rapelPage.js";
+import {renderExpedicoes,iniciarPaginaExpedicoes} from "./pages/expedicoesPage.js";
 
 const rotas = {
   "/": renderHome,
   "/calendario": renderCalendario,
   "/trilhas": renderTrilhas,
   "/galeria": renderGaleria,
+  "/rapel": renderRapel,
+  "/expedicoes": renderExpedicoes
 };
 
 function renderizarPagina() {
@@ -35,6 +39,13 @@ function renderizarPagina() {
 
    if (rotaAtual === "/trilhas") {
     iniciarPaginaTrilhas();
+  }
+  if (rotaAtual === "/rapel") {
+  iniciarPaginaRapel();
+  }
+
+  if (rotaAtual === "/expedicoes") {
+  iniciarPaginaExpedicoes();
   }
 } 
 

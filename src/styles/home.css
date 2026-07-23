@@ -4,7 +4,7 @@
 
 .secao-atividades {
   width: min(var(--largura-conteudo), calc(100% - 56px));
-  margin: 28px auto 50px;
+  margin: 26px auto 50px;
 }
 
 .cabecalho-atividades {
